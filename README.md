@@ -13,6 +13,7 @@ This is a simple Furniture Management System implemented using HTML and CSS. It 
 
 - HTML
 - CSS
+-JAVASCRIPT
 
 ## Usage
 
