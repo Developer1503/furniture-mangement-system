@@ -292,4 +292,21 @@
   background-color: #0056b3;
   border-color: #0056b3;
 }
+
+.timer {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: red;
+  margin-bottom: 20px;
+}
+
+.card {
+  transition: 0.3s;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
 /* Product Grid */
