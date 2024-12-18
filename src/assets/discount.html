@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discounted Chairs</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-md" id="navbar-color">
+        <a class="navbar-brand" href="index.html">Furniture</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span><img src="./image/menu.png" alt="" width="30px"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item active"><a class="nav-link" href="#">Products</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Countdown Timer at the Top -->
+    <div class="container text-center mt-4">
+        <h3 class="text-danger">Limited Time Discount Offer!</h3>
+        <div id="countdown" class="timer"></div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="container">
+        <h3 class="text-center" style="margin-top: 50px;">Chairs on discount</h3>
+        <div class="row" style="margin-top: 50px;">
+            <!-- First Product with Timer -->
+            <div class="col-md-3 py-3 py-md-0">
+                <div class="card" id="c">
+                    <img src="./image/comfort.png" class="card-img-top" alt="Chair 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Comfort Chair</h5>
+                        <p class="card-text">$150.00</p>
+                        <button class="btn btn-success add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Additional Products -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="./image/lux.png" class="card-img-top" alt="Chair 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Luxury Chair</h5>
+                        <p class="card-text">$180.00</p>
+                        <button class="btn btn-success add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat for 10-15 chairs -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="./image/gaming.png" class="card-img-top" alt="Chair 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Gaming Chair</h5>
+                        <p class="card-text">$180.00</p>
+                        <button class="btn btn-success add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Cart Counter -->
+    <div class="fixed-bottom p-3 text-right">
+        <button class="btn btn-primary" id="cartButton">Cart: <span id="cartCount">0</span> items</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Countdown Timer
+        const countdownElement = document.getElementById("countdown");
+        const cartCount = document.getElementById("cartCount");
+        let cartItems = 0;
+
+        function startCountdown(hours) {
+            const now = new Date().getTime();
+            const endTime = now + hours * 3600 * 1000;
+
+            const timer = setInterval(() => {
+                const current = new Date().getTime();
+                const distance = endTime - current;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    countdownElement.innerHTML = "<strong>Offer Ended</strong>";
+                    return;
+                }
+
+                const h = Math.floor(distance / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownElement.innerHTML = `${h}h ${m}m ${s}s`;
+            }, 1000);
+        }
+
+        // Start 3-Hour Countdown
+        startCountdown(3);
+
+        // Cart Functionality
+        const addToCartButtons = document.querySelectorAll(".add-to-cart");
+
+        addToCartButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                cartItems++;
+                cartCount.textContent = cartItems;
+                alert("Item added to cart!");
+            });
+        });
+    </script>
+</body>
+</html>
