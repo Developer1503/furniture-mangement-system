@@ -8,103 +8,178 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <!-- Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Icons -->
+    <style>
+        body {
+            background: none;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Navbar -->
+<!-- navbar top -->
 <div class="container">
+    <div class="navbar-top">
+        <div class="social-link">
+            <i><img src="./image/twitter.png" alt="" width="30px"></i>
+            <i><img src="./image/facebook.png" alt="" width="30px"></i>
+            <i><img src="./image/google-plus.png" alt="" width="30px"></i>
+        </div>
+        <div class="logo">
+            <h3>FURNITURE</h3>
+        </div>
+        <div class="icons">
+            <i><img src="./image/search.png" alt="" width="20px"></i>
+            <i><img src="./image/heart.png" alt="" width="20px"></i>
+            <i><img src="./image/shopping-cart.png" alt="" width="25px"></i>
+        </div>
+    </div>
+</div>
+<!-- navbar top -->
+
+<!-- main content -->
+<div class="main-content">
     <nav class="navbar navbar-expand-md" id="navbar-color">
-        <a class="navbar-brand" href="index.html">Furniture</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="chairs.html" class="nav-link active">Chairs</a></li>
-            </ul>
+        <div class="container">
+            <!-- Toggler/collapsible Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span><i><img src="./image/menu.png" alt="" width="30px"></i></span>
+            </button>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">Products</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categories
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="chairs.html" class="active">Chairs</a>
+                            <a class="dropdown-item" href="sofas.html">Sofas</a>
+                            <a class="dropdown-item" href="desks.html">Desks</a>
+                            <a class="dropdown-item" href="tables.html">Tables</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="signin.html">Sign In</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-</div>
 
-<!-- Chairs Section -->
-<div class="container my-5">
-    <h2 class="text-center mb-4">Chairs Collection</h2>
-    <div class="row">
-        <!-- Product 1 -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="image/chair1.png" class="card-img-top" alt="Chair 1">
-                <div class="card-body">
-                    <h5 class="card-title">Luxury Chair</h5>
-                    <p class="card-text">$150.00</p>
-                    <button class="btn btn-primary add-to-cart" data-name="Luxury Chair" data-price="150">Add to Cart</button>
+    <!-- Chairs Section -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Chairs Collection</h2>
+        <div class="row">
+            <!-- Product 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="image/chair1.png" class="card-img-top" alt="Chair 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Luxury Chair</h5>
+                        <p class="card-text">$150.00</p>
+                        <button class="btn btn-primary add-to-cart" data-name="Luxury Chair" data-price="150">Add to Cart</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Product 2 -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="image/chair2.png" class="card-img-top" alt="Chair 2">
-                <div class="card-body">
-                    <h5 class="card-title">Office Chair</h5>
-                    <p class="card-text">$120.00</p>
-                    <button class="btn btn-primary add-to-cart" data-name="Office Chair" data-price="120">Add to Cart</button>
+            <!-- Product 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="image/chair2.png" class="card-img-top" alt="Chair 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Office Chair</h5>
+                        <p class="card-text">$120.00</p>
+                        <button class="btn btn-primary add-to-cart" data-name="Office Chair" data-price="120">Add to Cart</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- More Products (Repeat as needed) -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="image/chair3.png" class="card-img-top" alt="Chair 3">
-                <div class="card-body">
-                    <h5 class="card-title">Comfort Chair</h5>
-                    <p class="card-text">$200.00</p>
-                    <button class="btn btn-primary add-to-cart" data-name="Comfort Chair" data-price="200">Add to Cart</button>
+            <!-- More Products (Repeat as needed) -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="image/chair3.png" class="card-img-top" alt="Chair 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Comfort Chair</h5>
+                        <p class="card-text">$200.00</p>
+                        <button class="btn btn-primary add-to-cart" data-name="Comfort Chair" data-price="200">Add to Cart</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Cart Section -->
-<div class="container">
-    <h3>Shopping Cart</h3>
-    <ul id="cart-items" class="list-group mb-3"></ul>
-    <p>Total: $<span id="cart-total">0.00</span></p>
-</div>
+    <!-- Cart Section -->
+    <div class="container">
+        <h3>Shopping Cart</h3>
+        <ul id="cart-items" class="list-group mb-3"></ul>
+        <p>Total: $<span id="cart-total">0.00</span></p>
+    </div>
 
-<script>
-    // Cart Functionality
-    let cart = [];
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', () => {
-            const name = button.getAttribute('data-name');
-            const price = parseFloat(button.getAttribute('data-price'));
-            cart.push({ name, price });
-            updateCart();
-        });
-    });
-
-    function updateCart() {
-        const cartItems = document.getElementById('cart-items');
-        const cartTotal = document.getElementById('cart-total');
-        cartItems.innerHTML = "";
-        let total = 0;
-
-        cart.forEach(item => {
-            total += item.price;
-            const li = document.createElement('li');
-            li.classList.add('list-group-item');
-            li.textContent = ${item.name} - $${item.price.toFixed(2)};
-            cartItems.appendChild(li);
+    <script>
+        // Cart Functionality
+        let cart = [];
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const name = button.getAttribute('data-name');
+                const price = parseFloat(button.getAttribute('data-price'));
+                cart.push({ name, price });
+                updateCart();
+            });
         });
 
-        cartTotal.textContent = total.toFixed(2);
-    }
-</script>
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            cartItems.innerHTML = "";
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price;
+                const li = document.createElement('li');
+                li.classList.add('list-group-item');
+                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItems.appendChild(li);
+            });
+
+            cartTotal.textContent = total.toFixed(2);
+        }
+    </script>
+
+</div>
+<!-- main content -->
+
+<!-- footer -->
+<footer id="footer">
+    <h1 class="text-center">Furniture</h1>
+    <p class="text-center">Make your imagination your reality</p>
+    <div class="icons text-center">
+        <i class="bx bxl-twitter"></i>
+        <i class="bx bxl-facebook"></i>
+        <i class="bx bxl-google"></i>
+        <i class="bx bxl-skype"></i>
+        <i class="bx bxl-instagram"></i>
+    </div>
+    <div class="copyright text-center">
+        &copy; Copyright <strong><span>Furniture</span></strong>. All Rights Reserved
+    </div>
+    <div class="credite text-center">
+        Designed By <a href="#">vs coding</a>
+    </div>
+</footer>
+<!-- footer -->
 
 </body>
-</html
+</html>
