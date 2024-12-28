@@ -7,6 +7,7 @@ import Cart from './pages/Cart';
 import AiGen from './pages/Ai_gen';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
+import Footer from './components/footer';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         {/* Fallback route for unknown paths */}
         <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
+    <Footer />
     </div>
   );
 };
