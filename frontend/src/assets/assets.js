@@ -1,26 +1,35 @@
-import home_img from './home_img.jpg'
-import Antro_logo from './Antro_logo.png'
-import Antro_transparent from './Antro_transparent.png'
-import choose_material from './choose_material.jpg'
-import L1_1 from './L1_1.jpg'
-import B1_2 from './B1_2.jpg'
-import B1_1 from './B1_1.jpg'
-import L1_2 from './L1_2.jpg'
-import L1_3 from './L1_3.jpg'
-import O1_1 from './O1_1.jpg'
+import home_img from './home_img.jpg';
+import Antro_logo from './Antro_logo.png';
+import Antro_transparent from './Antro_transparent.png';
+import choose_material from './choose_material.jpg';
+import L1_1 from './L1_1.jpg';
+import B1_2 from './B1_2.jpg';
+import B1_1 from './B1_1.jpg';
+import L1_2 from './L1_2.jpg';
+import L1_3 from './L1_3.jpg';
+import O1_1 from './O1_1.jpg';
+import search from './search.png';
+import shopping_cart from './shopping_cart.png';
+import user from './user.png';
+import ai_gen from './ai_gen.png'
 
 export const assets = {
   home_img,
   Antro_logo,
   Antro_transparent,
-  L1_1,
   choose_material,
+  L1_1,
   B1_2,
   B1_1,
   L1_2,
   L1_3,
-  O1_1
-}
+  O1_1,
+  search,
+  shopping_cart,
+  user,
+  ai_gen,
+
+};
 
 export const products = [
   {
@@ -83,5 +92,4 @@ export const products = [
     category: "Office",
     date: "2022-11-03 11:38:29"
   },
-  
-]
+];
