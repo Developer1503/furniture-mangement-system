@@ -9,6 +9,9 @@ export default {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
       },
+      colors: {
+        customBg: '#FEF9EC',
+      },
     },
   },
   plugins: [],
