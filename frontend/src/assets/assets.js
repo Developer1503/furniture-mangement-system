@@ -11,7 +11,11 @@ import O1_1 from './O1_1.jpg';
 import search from './search.png';
 import shopping_cart from './shopping_cart.png';
 import user from './user.png';
-import ai_gen from './ai_gen.png'
+import ai_gen from './ai_gen.png';
+import Bedroom from './Bedroom.jpg';
+import Diningroom from './Diningroom.jpg';
+import office from './office.jpg';
+import Livingroom from './Livingroom.jpg';
 
 export const assets = {
   home_img,
@@ -28,7 +32,10 @@ export const assets = {
   shopping_cart,
   user,
   ai_gen,
-
+  Bedroom,
+  Diningroom,
+  office,
+  Livingroom,
 };
 
 export const products = [
