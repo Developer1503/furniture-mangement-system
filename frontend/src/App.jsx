@@ -6,7 +6,7 @@ import About from './pages/About';
 import Cart from './pages/Cart';
 import AiGen from './pages/Ai_gen';
 import Login from './pages/Login';
-import Navbar from './Navbar';
+import Navbar from './components/Navbar';
 
 const App = () => {
   return (
