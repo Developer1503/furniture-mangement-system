@@ -48,6 +48,7 @@ const Navbar = () => {
         }}>
             {/* Logo Section */}
             <div style={{ display: 'flex', alignItems: 'center' }}>
+                
                 <img src={assets.Antro_transparent} alt="Antro Logo" style={{ height: '1.5rem' }} />
             </div>
 
