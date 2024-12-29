@@ -48,7 +48,7 @@ const Navbar = () => {
         }}>
             {/* Logo Section */}
             <div style={{ display: 'flex', alignItems: 'center' }}>
-                <img src={assets.Antro_logo} alt="Antro Logo" style={{ height: '2.5rem' }} />
+                <img src={assets.Antro_logo} alt="Antro Logo" style={{ height: '1.5rem' }} />
             </div>
 
             {/* Navigation Links */}
