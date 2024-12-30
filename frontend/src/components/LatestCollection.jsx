@@ -21,7 +21,7 @@ const LatestCollection = () => {
       </div>
 
       {/* Latest Collection rendering */}
-      <div className='grid grid-cols-3 gap-4 gap-y-6'>
+      <div className='grid-container'>
         {
           latestProducts.map((item, index) => (
             <Productitem key={index} id={item._id} image={item.image} name={item.name} price={item.price} />
@@ -33,3 +33,4 @@ const LatestCollection = () => {
 }
 
 export default LatestCollection;
+/*grid search*/

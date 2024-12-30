@@ -3,7 +3,6 @@
 @import "tailwindcss/utilities";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
-/* Custom styles for the grid container and items */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -21,7 +20,8 @@
   transform: scale(1.05);
 }
 
-.grid-item img {
+.product-image {
   width: 100%;
-  height: auto;
+  height: 200px; /* Adjust the height as needed */
+  object-fit: cover; /* Ensure the image covers the container without distortion */
 }

@@ -8,7 +8,7 @@ const Productitem = ({ id, image, name, price }) => {
   return (
     <Link className='text-gray-500 cursor-pointer' to={`/product/${id}`}>
       <div className='overflow-hidden rounded-lg shadow-lg'>
-        <img className='transition ease-in-out duration-300 transform hover:scale-105' src={image[0]} alt={name} />
+        <img className='transition ease-in-out duration-300 transform hover:scale-105 w-full h-48 object-cover' src={image[0]} alt={name} />
       </div>
       <p className='pt-3 pb-1 text-sm'>{name}</p>
       <p className='text-sm font-medium'>{currency}{price}</p>
@@ -17,3 +17,4 @@ const Productitem = ({ id, image, name, price }) => {
 }
 
 export default Productitem;
+/*changes to grid container*/
