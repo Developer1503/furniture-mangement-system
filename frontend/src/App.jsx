@@ -6,6 +6,7 @@ import About from './pages/About';
 import Cart from './pages/Cart';
 import AiGen from './pages/Ai_gen';
 import Login from './pages/Login';
+import OurPage from './components/ourpage'; // Update the import path to the components folder
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/Cart" element={<Cart />} />
           <Route path="/Ai_gen" element={<AiGen />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/OurPage" element={<OurPage />} /> {/* Ensure the route path is correct */}
           {/* Fallback route for unknown paths */}
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>

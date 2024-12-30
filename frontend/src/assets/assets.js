@@ -16,6 +16,7 @@ import Bedroom from './Bedroom.jpg';
 import Diningroom from './Diningroom.jpg';
 import office from './office.jpg';
 import Livingroom from './Livingroom.jpg';
+import OurPage from './OurPage.jpg';
 
 export const assets = {
   home_img,
@@ -36,6 +37,8 @@ export const assets = {
   Diningroom,
   office,
   Livingroom,
+  OurPage,
+
 };
 
 export const products = [
