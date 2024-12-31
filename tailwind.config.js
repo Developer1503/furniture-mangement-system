@@ -11,8 +11,10 @@ export default {
       },
       colors: {
         customBg: '#FEF9EC',
+        beige: '#F8F4EA',
       },
     },
   },
   plugins: [],
+  
 };
