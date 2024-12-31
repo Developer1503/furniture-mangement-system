@@ -54,7 +54,7 @@ const OurPage = () => {
           transition={{ duration: 0.5, delay: 0.8 }}
           src={ourpageImage} // Use the imported image
           alt="Modern living room with curved white chairs and wooden accents"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover rounded-2xl"
         />
       </div>
     </div>
