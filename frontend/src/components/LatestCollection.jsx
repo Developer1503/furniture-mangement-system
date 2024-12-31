@@ -14,7 +14,7 @@ const LatestCollection = () => {
   return (
     <div className='my-10'>
       <div className='text-center py-8 text-3xl'>
-        <Title text1={'NEW'} text2={'COLLECTION'} />
+        <Title text1={'NEW COLLECTION'}  className='font-bold'/>
         <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-500'>
           These products are made with wood from forest certified to be responsibly
         </p>
