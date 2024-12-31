@@ -4,7 +4,7 @@ import ourpageImage from '../assets/ourpage.jpg'; // Import the image from the a
 
 const OurPage = () => {
   return (
-    <div className="flex min-h-screen bg-[#FFF7E2] overflow-hidden">
+    <div className="flex min-h-screen bg-beige overflow-hidden ">
       {/* Left Section with Text */}
       <div className="w-1/2 flex flex-col justify-center pl-24 pr-24">
         <motion.div
@@ -47,7 +47,7 @@ const OurPage = () => {
       </div>
 
       {/* Right Section with Image */}
-      <div className="w-1/2 pl-0">
+      <div className="w-1/2 pl-0 pb-4">
         <motion.img
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
