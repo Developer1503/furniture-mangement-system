@@ -1,6 +1,6 @@
 import React from 'react'
 
-const categories = () => {
+const BedRoom = () => {
   return (
     <div>
       
@@ -8,5 +8,4 @@ const categories = () => {
   )
 }
 
-export default categories
-
+export default BedRoom
