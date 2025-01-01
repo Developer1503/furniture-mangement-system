@@ -1,14 +1,23 @@
 // src/pages/Office.jsx
-import React, { useState } from 'react';
-import { products } from '../assets/assets'; // Ensure this path is correct
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ShopContext } from '../context/ShopContext';
 
 const Office = () => {
+  useEffect(() => {
+    console.log('Office component rendered');
+  }, []);
+
+  const { products } = useContext(ShopContext);
+
   // Filter products for the Office category
   const officeProducts = products.filter(product => product.category === "Office");
 
   // State for sorting
   const [sortedProducts, setSortedProducts] = useState(officeProducts);
   const [sortConfig, setSortConfig] = useState({ key: 'price', direction: 'ascending' });
+
+  const navigate = useNavigate();
 
   // Sorting functions
   const sortProducts = (key, direction) => {
@@ -21,6 +30,10 @@ const Office = () => {
     });
     setSortedProducts(sorted);
     setSortConfig({ key, direction });
+  };
+
+  const handleProductClick = (product) => {
+    navigate(`/product/${product._id}`, { state: { product } });
   };
 
   return (
@@ -40,27 +53,18 @@ const Office = () => {
           <option value="bestseller-ascending">Show Bestsellers</option>
         </select>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+      <div className="grid-container">
         {sortedProducts.map(product => (
           <div
             key={product._id}
-            style={{
-              borderRadius: '0.5rem',
-              overflow: 'hidden',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              transition: 'transform 0.3s ease-in-out',
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+            className="grid-item"
+            onClick={() => handleProductClick(product)}
+            style={{ cursor: 'pointer' }}
           >
             <img
               src={product.image[0]}
               alt={product.name}
-              style={{
-                width: '100%',
-                height: '200px',
-                objectFit: 'cover',
-              }}
+              className="product-image"
             />
             <div style={{ padding: '1rem' }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>{product.name}</h2>

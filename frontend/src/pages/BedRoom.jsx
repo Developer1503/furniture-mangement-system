@@ -1,14 +1,23 @@
-// src/pages/Bedroom.jsx
-import React, { useState } from 'react';
-import { products } from '../assets/assets'; // Ensure this path is correct
+// src/pages/BedRoom.jsx
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ShopContext } from '../context/ShopContext';
 
-const Bedroom = () => {
+const BedRoom = () => {
+  useEffect(() => {
+    console.log('BedRoom component rendered');
+  }, []);
+
+  const { products } = useContext(ShopContext);
+
   // Filter products for the Bedroom category
   const bedroomProducts = products.filter(product => product.category === "Bedroom");
 
   // State for sorting
   const [sortedProducts, setSortedProducts] = useState(bedroomProducts);
   const [sortConfig, setSortConfig] = useState({ key: 'price', direction: 'ascending' });
+
+  const navigate = useNavigate();
 
   // Sorting functions
   const sortProducts = (key, direction) => {
@@ -21,6 +30,10 @@ const Bedroom = () => {
     });
     setSortedProducts(sorted);
     setSortConfig({ key, direction });
+  };
+
+  const handleProductClick = (product) => {
+    navigate(`/product/${product._id}`, { state: { product } });
   };
 
   return (
@@ -40,27 +53,18 @@ const Bedroom = () => {
           <option value="bestseller-ascending">Show Bestsellers</option>
         </select>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+      <div className="grid-container">
         {sortedProducts.map(product => (
           <div
             key={product._id}
-            style={{
-              borderRadius: '0.5rem',
-              overflow: 'hidden',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              transition: 'transform 0.3s ease-in-out',
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+            className="grid-item"
+            onClick={() => handleProductClick(product)}
+            style={{ cursor: 'pointer' }}
           >
             <img
               src={product.image[0]}
               alt={product.name}
-              style={{
-                width: '100%',
-                height: '200px',
-                objectFit: 'cover',
-              }}
+              className="product-image"
             />
             <div style={{ padding: '1rem' }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>{product.name}</h2>
@@ -74,4 +78,4 @@ const Bedroom = () => {
   );
 };
 
-export default Bedroom;
+export default BedRoom;
