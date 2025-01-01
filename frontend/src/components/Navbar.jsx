@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { assets } from '../assets/assets'; // Ensure this path is correct
 
 const Navbar = () => {
@@ -47,34 +48,29 @@ const Navbar = () => {
             position: 'relative',
         }}>
             {/* Logo Section */}
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-                
+            <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
                 <img src={assets.Antro_transparent} alt="Antro Logo" style={{ height: '1.5rem' }} />
-            </div>
+            </Link>
 
             {/* Navigation Links */}
             <ul style={{ display: 'flex', gap: '1.5rem', listStyle: 'none', margin: 0, padding: 0 }}>
                 <li>
-                    <a href="#home" style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, textDecoration: 'none', color: 'black', transition: 'color 0.3s ease' }}
+                    <Link to="/" style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, textDecoration: 'none', color: 'black', transition: 'color 0.3s ease' }}
                        onMouseEnter={(e) => e.target.style.color = '#007BFF'}
                        onMouseLeave={(e) => e.target.style.color = 'black'}>
                         HOME
-                    </a>
+                    </Link>
                 </li>
 
                 {/* Categories with Dropdown */}
                 <li style={{ position: 'relative' }}>
-                    <a
-                        href="#categories"
-                        onClick={(e) => {
-                            e.preventDefault(); // Prevent default navigation
-                            toggleDropdown();
-                        }}
-                        style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, cursor: 'pointer', textDecoration: 'none', color: 'black', transition: 'color 0.3s ease' }}
+                    <button
+                        onClick={toggleDropdown}
+                        style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, cursor: 'pointer', textDecoration: 'none', color: 'black', transition: 'color 0.3s ease', background: 'none', border: 'none' }}
                         onMouseEnter={(e) => e.target.style.color = '#007BFF'}
                         onMouseLeave={(e) => e.target.style.color = 'black'}>
                         CATEGORIES
-                    </a>
+                    </button>
                     {isDropdownVisible && (
                         <div style={{
                             position: 'absolute',
@@ -111,28 +107,28 @@ const Navbar = () => {
                                         onMouseEnter={() => handleMouseEnter('livingroom')}
                                         onMouseLeave={handleMouseLeave}
                                     >
-                                        <a href="#livingroom" style={{ textDecoration: 'none', color: 'black' }}>Livingroom</a>
+                                        <Link to="/livingroom" style={{ textDecoration: 'none', color: 'black' }}>Living Room</Link>
                                     </li>
                                     <li
                                         style={{ padding: '0.5rem 1rem' }}
                                         onMouseEnter={() => handleMouseEnter('bedroom')}
                                         onMouseLeave={handleMouseLeave}
                                     >
-                                        <a href="#bedroom" style={{ textDecoration: 'none', color: 'black' }}>Bedroom</a>
+                                        <Link to="/bedroom" style={{ textDecoration: 'none', color: 'black' }}>Bedroom</Link>
                                     </li>
                                     <li
                                         style={{ padding: '0.5rem 1rem' }}
                                         onMouseEnter={() => handleMouseEnter('office')}
                                         onMouseLeave={handleMouseLeave}
                                     >
-                                        <a href="#office" style={{ textDecoration: 'none', color: 'black' }}>Office</a>
+                                        <Link to="/office" style={{ textDecoration: 'none', color: 'black' }}>Office</Link>
                                     </li>
                                     <li
                                         style={{ padding: '0.5rem 1rem' }}
                                         onMouseEnter={() => handleMouseEnter('diningroom')}
                                         onMouseLeave={handleMouseLeave}
                                     >
-                                        <a href="#diningroom" style={{ textDecoration: 'none', color: 'black' }}>Diningroom</a>
+                                        <Link to="/diningroom" style={{ textDecoration: 'none', color: 'black' }}>Dining Room</Link>
                                     </li>
                                 </ul>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexGrow: 1 }}>
@@ -153,11 +149,11 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                    <a href="#about" style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, textDecoration: 'none', color: 'black', transition: 'color 0.3s ease' }}
+                    <Link to="/about" style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, textDecoration: 'none', color: 'black', transition: 'color 0.3s ease' }}
                        onMouseEnter={(e) => e.target.style.color = '#007BFF'}
                        onMouseLeave={(e) => e.target.style.color = 'black'}>
                         ABOUT
-                    </a>
+                    </Link>
                 </li>
                 <li>
                     <img src={assets.ai_gen} alt="Antro Transparent Logo" style={{ height: '2.5rem' }} />
@@ -166,7 +162,7 @@ const Navbar = () => {
 
             {/* User Icons */}
             <div style={{ display: 'flex', gap: '1rem' }}>
-                <img src={assets.user} alt="User  Icon" style={{ width: '1.5rem' }} />
+                <img src={assets.user} alt="User Icon" style={{ width: '1.5rem' }} />
                 <img src={assets.search} alt="Search Icon" style={{ width: '1.5rem' }} />
                 <img src={assets.shopping_cart} alt="Shopping Cart" style={{ width: '1.5rem' }} />
             </div>
