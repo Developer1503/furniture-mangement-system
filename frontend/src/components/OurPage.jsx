@@ -1,10 +1,11 @@
+// src/components/OurPage.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import ourpageImage from '../assets/ourpage.jpg'; // Import the image from the assets folder
 
 const OurPage = () => {
   return (
-    <div className="flex min-h-screen bg-beige overflow-hidden ">
+    <div className="flex min-h-screen bg-[#FFF7E2] overflow-hidden">
       {/* Left Section with Text */}
       <div className="w-1/2 flex flex-col justify-center pl-24 pr-24">
         <motion.div
