@@ -12,7 +12,9 @@ import Footer from './components/Footer';
 import LivingRoom from './pages/Livingroom';
 import BedRoom from './pages/BedRoom';
 import DiningRoom from './pages/DiningRoom';
-import Office from './pages/Office';  
+import Office from './pages/Office';
+import ProductDetail from './pages/ProductDetail';
+
 
 
 const App = () => {
@@ -30,7 +32,8 @@ const App = () => {
           <Route path="/Cart" element={<Cart />} />
           <Route path="/Ai_gen" element={<AiGen />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/OurPage" element={<OurPage />} /> {/* Ensure the route path is correct */}
+          <Route path="/OurPage" element={<OurPage />} />
+          <Route path="/ProductDetail" element={<ProductDetail />} />
           {/* Fallback route for unknown paths */}
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
