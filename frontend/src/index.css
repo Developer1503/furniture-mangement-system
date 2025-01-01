@@ -1,7 +1,13 @@
+/* src/index.css */
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400,700&display=swap');
+
+/* Apply the Google Font to the body */
+body {
+  font-family: 'Roboto', sans-serif;
+}
 
 .grid-container {
   display: grid;
