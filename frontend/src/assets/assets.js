@@ -71,6 +71,8 @@ import K1_6_1 from './K1_6_1.jpg';
 import K1_6_2 from './K1_6_2.jpg';
 import K1_6_3 from './K1_6_3.jpg';
 import OurPage from './OurPage.jpg';
+import about_img from './about_img.jpg';
+
 
 export const assets = {
   home_img,
@@ -145,7 +147,8 @@ export const assets = {
   K1_6_1,
   K1_6_2,
   K1_6_3,
-  OurPage
+  OurPage,
+  about_img,
 };
 
 export const products = [
