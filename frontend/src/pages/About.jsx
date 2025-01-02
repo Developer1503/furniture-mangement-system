@@ -1,6 +1,7 @@
 import React from 'react';
 import Squares from '../components/squares'; // Correct the import path
 import { motion } from 'framer-motion';
+import { assets } from '../assets/assets';
 
 const About = () => {
   return (
@@ -56,7 +57,7 @@ const About = () => {
         {/* Right Image */}
         <div className="lg:w-1/2 flex items-center justify-center">
           <img
-            src="/path/to/your/image.jpg" // Replace with the actual path to the image
+            src={assets.about_img} 
             alt="Wooden Furniture"
             className="rounded-lg shadow-lg"
           />
