@@ -12,7 +12,7 @@ const Home = () => {
       <Custom />
       <LatestCollection />
       <OurPage />
-      <Footer />
+      
     </div>
   );
 };

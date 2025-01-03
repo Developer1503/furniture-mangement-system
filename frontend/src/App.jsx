@@ -5,7 +5,7 @@ import About from './pages/About';
 import Cart from './pages/Cart';
 import AiGen from './pages/Ai_gen';
 import Login from './pages/Login';
-import OurPage from './components/ourpage';
+import OurPage from './components/OurPage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LivingRoom from './pages/LivingRoom';
