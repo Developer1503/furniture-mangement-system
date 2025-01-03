@@ -5,7 +5,7 @@ import { ShopContext } from '../context/ShopContext';
 import { Rating } from 'react-simple-star-rating';
 
 const ProductInfo = ({ productId }) => {
-  const { getProductById, currency } = useContext(ShopContext);
+  const { getProductById, currency, addToCart } = useContext(ShopContext);
   const product = getProductById(productId);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(product.colors ? product.colors[0] : '#fff');
@@ -22,6 +22,10 @@ const ProductInfo = ({ productId }) => {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
+  };
+
+  const handleAddToCart = () => {
+    addToCart({ ...product, quantity });
   };
 
   return (
@@ -82,10 +86,10 @@ const ProductInfo = ({ productId }) => {
             <span>{quantity}</span>
             <button onClick={() => setQuantity(quantity + 1)}>+</button>
           </div>
+          <button className="add-to-cart" onClick={handleAddToCart}>ADD TO CART</button>
         </div>
         <div className="right-section">
           <div className="cta-section">
-            <button className="add-to-cart">ADD TO CART</button>
             <button className="buy-now">BUY NOW</button>
             <button className="save-for-later">SAVE FOR LATER</button>
             <p className="delivery-date">Delivered by: 2023-01-15</p>
@@ -243,6 +247,16 @@ const InfoWrapper = styled.section`
           margin: 0 0.5rem;
         }
       }
+      .add-to-cart {
+        background-color: #007bff;
+        color: #fff;
+        padding: 0.7rem 1.4rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        margin-top: 1rem;
+        cursor: pointer;
+      }
     }
 
     .right-section {
@@ -257,7 +271,7 @@ const InfoWrapper = styled.section`
         flex-direction: column;
         align-items: flex-start;
         margin-bottom: 2rem;
-        .add-to-cart, .buy-now, .save-for-later {
+        .buy-now, .save-for-later {
           background-color: #007bff;
           color: #fff;
           padding: 0.7rem 1.4rem;
@@ -317,6 +331,5 @@ const InfoWrapper = styled.section`
 ProductInfo.propTypes = {
   productId: PropTypes.string.isRequired,
 };
-
 
 export default ProductInfo;
