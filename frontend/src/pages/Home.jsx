@@ -1,16 +1,18 @@
 import React from 'react';
-import Custom from '../components/custom'; // Import the Custom component with correct casing
-import HeroSection from '../components/Herosection'; // Import the Herosection component with correct casing
+import Custom from '../components/Custom';
+import HeroSection from '../components/HeroSection';
 import LatestCollection from '../components/LatestCollection';
-import OurPage from '../components/ourpage';// Import the ourpage component with correct casing
+import OurPage from '../components/OurPage';
+import Footer from '../components/Footer';
 
 const Home = () => {
   return (
     <div>
       <HeroSection />
       <Custom />
-     <LatestCollection />
-     <OurPage /> 
+      <LatestCollection />
+      <OurPage />
+      <Footer />
     </div>
   );
 };
