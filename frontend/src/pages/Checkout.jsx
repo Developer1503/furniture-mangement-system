@@ -1,4 +1,3 @@
-// src/pages/Checkout.jsx
 import React, { useContext, useState } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import { Link, useNavigate } from 'react-router-dom';

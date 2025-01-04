@@ -1,4 +1,3 @@
-// src/components/Squares.jsx
 import { useRef, useEffect, useState } from 'react';
 
 const Squares = ({

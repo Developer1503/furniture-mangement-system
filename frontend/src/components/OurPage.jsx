@@ -1,4 +1,3 @@
-// src/components/OurPage.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import ourpageImage from '../assets/ourpage.jpg'; // Import the image from the assets folder

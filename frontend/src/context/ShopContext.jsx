@@ -1,4 +1,3 @@
-// src/context/ShopContext.jsx
 import { createContext, useState, useEffect } from "react";
 import { products } from "../assets/assets";
 

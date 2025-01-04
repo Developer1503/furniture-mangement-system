@@ -1,4 +1,3 @@
-// src/pages/LivingRoom.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';

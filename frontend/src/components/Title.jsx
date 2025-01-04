@@ -1,4 +1,3 @@
-// src/components/Title.jsx
 import React from 'react';
 
 const Title = ({ text1, text2, className }) => {
