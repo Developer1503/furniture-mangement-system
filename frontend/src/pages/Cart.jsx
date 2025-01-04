@@ -1,3 +1,4 @@
+// src/pages/Cart.jsx
 import React, { useContext } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import { Link } from 'react-router-dom';
@@ -60,7 +61,7 @@ const Cart = () => {
                   <img src="rit/luv/bab" alt="mastercard" className="h-8" />
                 </div>
               </div>
-              <button className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 w-full">Proceed to Checkout</button>
+              <Link to="/checkout" className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 w-full text-center block">Proceed to Checkout</Link>
             </div>
           </div>
         )}

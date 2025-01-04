@@ -1,3 +1,4 @@
+// src/App.jsx
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -12,7 +13,8 @@ import LivingRoom from './pages/LivingRoom';
 import BedRoom from './pages/BedRoom';
 import DiningRoom from './pages/DiningRoom';
 import Office from './pages/Office';
-import ProductPage from './pages/ProductPage'; // Import the ProductPage component
+import ProductPage from './pages/ProductPage';
+import Checkout from './pages/Checkout'; // Import the Checkout component
 
 const App = () => {
   return (
@@ -30,7 +32,8 @@ const App = () => {
           <Route path="/Ai_gen" element={<AiGen />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/OurPage" element={<OurPage />} />
-          <Route path="/product/:productId" element={<ProductPage />} /> {/* Add route for ProductPage */}
+          <Route path="/product/:productId" element={<ProductPage />} />
+          <Route path="/checkout" element={<Checkout />} /> {/* Add route for Checkout */}
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </main>

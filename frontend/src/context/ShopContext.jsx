@@ -1,3 +1,4 @@
+// src/context/ShopContext.jsx
 import { createContext, useState, useEffect } from "react";
 import { products } from "../assets/assets";
 
@@ -45,6 +46,10 @@ const ShopContextProvider = (props) => {
     );
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   const getCartItemCount = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
@@ -58,6 +63,7 @@ const ShopContextProvider = (props) => {
     addToCart,
     removeFromCart,
     updateQuantity,
+    clearCart,
     getCartItemCount,
   };
 
