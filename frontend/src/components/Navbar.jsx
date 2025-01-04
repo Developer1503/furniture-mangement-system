@@ -174,7 +174,9 @@ const Navbar = () => {
 
             {/* User Icons */}
             <div style={{ display: 'flex', gap: '1rem' }}>
+            <Link to="/Auth">
                 <img src={assets.user} alt="User Icon" style={{ width: '1.5rem' }} />
+                </Link>
                 <img src={assets.search} alt="Search Icon" style={{ width: '1.5rem' }} />
                 <div style={{ position: 'relative' }}>
                     <Link to="/cart">
