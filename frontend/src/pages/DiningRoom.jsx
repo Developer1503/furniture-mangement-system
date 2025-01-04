@@ -3,11 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 
 const DiningRoom = () => {
-  useEffect(() => {
-    console.log('DiningRoom component rendered');
-  }, []);
-
-  const { products } = useContext(ShopContext);
+const { products } = useContext(ShopContext);
 
   // Filter products for the Dining Room category
   const diningRoomProducts = products.filter(product => product.category === "Dining Room");
