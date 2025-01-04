@@ -97,9 +97,9 @@ const Navbar = () => {
                             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                             listStyle: 'none',
                             margin: 0,
+                            zIndex: 20,
                             padding: '0.5rem',
                             borderRadius: '4px',
-                            zIndex: 10,
                             width: '400px', // Increased width for the dropdown
                             display: 'flex',
                             flexDirection: 'column',
