@@ -11,7 +11,7 @@ import O1_1 from './O1_1.jpg';
 import search from './search.png';
 import shopping_cart from './shopping_cart.png';
 import user from './user.png';
-import ai_gen from './ai_gen.png';
+import ai_gen from './ai_gen.jpg';
 import Bedroom from './Bedroom.jpg';
 import Diningroom from './Diningroom.jpg';
 import office from './office.jpg';
@@ -72,12 +72,19 @@ import K1_6_2 from './K1_6_2.jpg';
 import K1_6_3 from './K1_6_3.jpg';
 import OurPage from './OurPage.jpg';
 import about_img from './about_img.jpg';
+import razorpay from './razorpay.png';
+import gpay from './gpay.png';
+import mastercard from './mastercard.png';
+import stripe from './stripe.png';
+import cash from './cash.png';
 
 export const assets = {
   home_img,
   Antro_logo,
   Antro_transparent,
   choose_material,
+  stripe,
+  cash,
   L1_1,
   B1_2,
   B1_1,
@@ -148,6 +155,9 @@ export const assets = {
   K1_6_3,
   OurPage,
   about_img,
+  mastercard,
+  gpay,
+  razorpay,
 };
 
 export const products = [
