@@ -168,7 +168,7 @@ const Navbar = () => {
                     </Link>
                 </li>
                 <li>
-                    <img src={assets.ai_gen} alt="Antro Transparent Logo" style={{ height: '2.5rem' }} />
+                    <img src={assets.ai_gen} alt="Antro Transparent Logo" style={{ height: '2.2rem' }} />
                 </li>
             </ul>
 
