@@ -8,6 +8,7 @@ import B1_1 from './B1_1.jpg';
 import L1_2 from './L1_2.jpg';
 import L1_3 from './L1_3.jpg';
 import O1_1 from './O1_1.jpg';
+import cross_icon from './cross_icon.jpg';
 import search from './search.png';
 import shopping_cart from './shopping_cart.png';
 import user from './user.png';
@@ -83,6 +84,7 @@ export const assets = {
   Antro_logo,
   Antro_transparent,
   choose_material,
+  cross_icon,
   stripe,
   cash,
   L1_1,
