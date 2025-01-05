@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import { Link } from 'react-router-dom';
+import { assets } from '../assets/assets';
 
 const Cart = () => {
   const { cart, currency, removeFromCart, updateQuantity } = useContext(ShopContext);
@@ -55,9 +56,9 @@ const Cart = () => {
               <div className="mt-4">
                 <p className="text-gray-700">Accepted Payment Methods:</p>
                 <div className="flex gap-2">
-                  <img src="rizz/ritluvbab" alt="razorpay" className="h-8" />
-                  <img src="no/cap" alt="gpay" className="h-8" />
-                  <img src="rit/luv/bab" alt="mastercard" className="h-8" />
+                  <img src={assets.razorpay} alt="razorpay" className="h-8" />
+                  <img src={assets.gpay} alt="gpay" className="h-8" />
+                  <img src={assets.mastercard} alt="mastercard" className="h-8" />
                 </div>
               </div>
               <Link to="/checkout" className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 w-full text-center block">Proceed to Checkout</Link>
