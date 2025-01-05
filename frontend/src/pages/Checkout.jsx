@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { assets } from '../assets/assets';
 
 const Checkout = () => {
   const { cart, currency, delivery_fee, clearCart } = useContext(ShopContext);
@@ -228,18 +229,19 @@ const Checkout = () => {
           <div className="mb-4">
             <label className="block mb-2 flex items-center">
               <input type="radio" name="paymentMethod" value="stripe" className="mr-2" />
-              <img src="stripe-logo.png" alt="Stripe" className="h-6 mr-2" />
+              <img src={assets.stripe} alt="Stripe" className="h-6 mr-2" />
               Stripe
               <span className="ml-2 text-gray-500">(Secure online payment)</span>
             </label>
             <label className="block mb-2 flex items-center">
               <input type="radio" name="paymentMethod" value="razorpay" className="mr-2" />
-              <img src="razorpay-logo.png" alt="Razorpay" className="h-6 mr-2" />
+              <img src={assets.razorpay} alt="Razorpay" className="h-6 mr-2" />
               Razorpay
               <span className="ml-2 text-gray-500">(Secure online payment)</span>
             </label>
             <label className="block mb-2 flex items-center">
               <input type="radio" name="paymentMethod" value="cashOnDelivery" className="mr-2" />
+              <img src={assets.cash} alt="Cash" className="h-6 mr-2" />
               Cash on Delivery
               <span className="ml-2 text-gray-500">(Pay when you receive the order)</span>
             </label>
