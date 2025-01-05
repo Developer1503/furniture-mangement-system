@@ -5,6 +5,8 @@ export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
   const [productsState] = useState(products);
+  const [search, setSearch] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem('cart');
     return savedCart ? JSON.parse(savedCart) : [];
@@ -33,6 +35,8 @@ const ShopContextProvider = (props) => {
     });
   };
 
+  
+
   const removeFromCart = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
   };
@@ -58,6 +62,10 @@ const ShopContextProvider = (props) => {
     cart,
     currency,
     delivery_fee,
+    search,
+    setSearch,
+    showSearch,
+    setShowSearch,
     getProductById,
     addToCart,
     removeFromCart,
