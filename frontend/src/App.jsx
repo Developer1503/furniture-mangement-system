@@ -15,11 +15,13 @@ import DiningRoom from './pages/DiningRoom';
 import Office from './pages/Office';
 import ProductPage from './pages/ProductPage';
 import Checkout from './pages/Checkout';
+import SearchBar from './components/SearchBar';
 
 const App = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
+      <SearchBar />
       <main className="flex-grow px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
         <Routes>
           <Route path="/" element={<Home />} />
