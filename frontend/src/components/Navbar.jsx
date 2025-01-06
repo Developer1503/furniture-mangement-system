@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { assets } from '../assets/assets'; // Ensure this path is correct
+import { assets } from '../assets/assets';
 import { ShopContext } from '../context/ShopContext';
 
 const Navbar = () => {
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-    const [hoveredItem, setHoveredItem] = useState('livingroom'); // Set default to 'livingroom'
-    const { getCartItemCount } = useContext(ShopContext);
+    const [hoveredItem, setHoveredItem] = useState('livingroom');
+    const { getCartItemCount, setShowSearch } = useContext(ShopContext);
     const cartItemCount = getCartItemCount();
     const dropdownRef = useRef(null);
 
@@ -23,7 +23,7 @@ const Navbar = () => {
     };
 
     const handleMouseLeave = () => {
-        setHoveredItem('livingroom'); // Reset to default on mouse leave
+        setHoveredItem('livingroom');
     };
 
     const getImageSrc = () => {
@@ -37,7 +37,7 @@ const Navbar = () => {
             case 'diningroom':
                 return assets.Diningroom;
             default:
-                return assets.Livingroom; // Default to Livingroom
+                return assets.Livingroom;
         }
     };
 
@@ -45,6 +45,10 @@ const Navbar = () => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setIsDropdownVisible(false);
         }
+    };
+
+    const handleSearchToggle = () => {
+        setShowSearch(true);
     };
 
     useEffect(() => {
@@ -64,12 +68,10 @@ const Navbar = () => {
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
             position: 'relative',
         }}>
-            {/* Logo Section */}
             <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
                 <img src={assets.Antro_transparent} alt="Antro Logo" style={{ height: '1.5rem' }} />
             </Link>
 
-            {/* Navigation Links */}
             <ul style={{ display: 'flex', gap: '1.5rem', listStyle: 'none', margin: 0, padding: 0 }}>
                 <li>
                     <Link to="/" style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, textDecoration: 'none', color: 'black', transition: 'color 0.3s ease' }}
@@ -79,7 +81,6 @@ const Navbar = () => {
                     </Link>
                 </li>
 
-                {/* Categories with Dropdown */}
                 <li style={{ position: 'relative' }}>
                     <button
                         onClick={toggleDropdown}
@@ -100,7 +101,7 @@ const Navbar = () => {
                             zIndex: 20,
                             padding: '0.5rem',
                             borderRadius: '4px',
-                            width: '400px', // Increased width for the dropdown
+                            width: '400px',
                             display: 'flex',
                             flexDirection: 'column',
                         }}>
@@ -145,10 +146,10 @@ const Navbar = () => {
                                         src={getImageSrc()}
                                         alt={hoveredItem}
                                         style={{
-                                            width: '15rem', // Increased width
-                                            height: '10rem', // Increased height
+                                            width: '15rem',
+                                            height: '10rem',
                                             transition: 'opacity 0.3s ease, transform 0.3s ease',
-                                            opacity: 1, // Always visible
+                                            opacity: 1,
                                             transform: 'scale(1)',
                                         }}
                                         onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
@@ -172,12 +173,11 @@ const Navbar = () => {
                 </li>
             </ul>
 
-            {/* User Icons */}
             <div style={{ display: 'flex', gap: '1rem' }}>
-            <Link to="/Auth">
-                <img src={assets.user} alt="User Icon" style={{ width: '1.5rem' }} />
+                <Link to="/Auth">
+                    <img src={assets.user} alt="User Icon" style={{ width: '1.5rem' }} />
                 </Link>
-                <img src={assets.search} alt="Search Icon" style={{ width: '1.5rem' }} />
+                <img src={assets.search} alt="Search Icon" style={{ width: '1.5rem', cursor: 'pointer' }} onClick={handleSearchToggle} />
                 <div style={{ position: 'relative' }}>
                     <Link to="/cart">
                         <img src={assets.shopping_cart} alt="Shopping Cart" style={{ width: '1.5rem' }} />

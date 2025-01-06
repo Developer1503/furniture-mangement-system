@@ -35,8 +35,6 @@ const ShopContextProvider = (props) => {
     });
   };
 
-  
-
   const removeFromCart = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
   };
@@ -57,8 +55,12 @@ const ShopContextProvider = (props) => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
 
+  const filteredProducts = productsState.filter(product =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   const value = {
-    products: productsState,
+    products: filteredProducts,
     cart,
     currency,
     delivery_fee,

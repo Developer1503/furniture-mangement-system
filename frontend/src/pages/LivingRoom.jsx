@@ -3,10 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 
 const LivingRoom = () => {
-  useEffect(() => {
-    console.log('LivingRoom component rendered');
-  }, []);
-
   const { products } = useContext(ShopContext);
 
   // Filter products for the Living Room category
