@@ -1,11 +1,10 @@
-// src/components/OurPage.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import ourpageImage from '../assets/ourpage.jpg'; // Import the image from the assets folder
 
 const OurPage = () => {
   return (
-    <div className="flex min-h-screen bg-[#FFF7E2] overflow-hidden">
+    <div className="flex min-h-screen bg-yellow-100 overflow-hidden rounded-2xl">
       {/* Left Section with Text */}
       <div className="w-1/2 flex flex-col justify-center pl-24 pr-24">
         <motion.div
@@ -48,7 +47,7 @@ const OurPage = () => {
       </div>
 
       {/* Right Section with Image */}
-      <div className="w-1/2 pl-0 pb-4">
+      <div className="w-1/2 pl-0 pr-6 pt-6 pb-6">
         <motion.img
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -1,17 +1,12 @@
-// src/pages/DiningRoom.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 
 const DiningRoom = () => {
-  useEffect(() => {
-    console.log('DiningRoom component rendered');
-  }, []);
-
-  const { products } = useContext(ShopContext);
+const { products } = useContext(ShopContext);
 
   // Filter products for the Dining Room category
-  const diningRoomProducts = products.filter(product => product.category === "Dining room");
+  const diningRoomProducts = products.filter(product => product.category === "Dining Room");
 
   // State for sorting
   const [sortedProducts, setSortedProducts] = useState(diningRoomProducts);

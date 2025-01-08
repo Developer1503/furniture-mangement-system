@@ -1,4 +1,4 @@
-// src/components/Herosection.jsx
+
 import React from 'react';
 import { assets } from '../assets/assets'; // Ensure this path is correct
 
