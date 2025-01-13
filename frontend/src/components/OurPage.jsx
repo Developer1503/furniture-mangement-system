@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ourpageImage from '../assets/ourpage.jpg'; // Import the image from the assets folder
+import { Link } from 'react-router-dom';
 
 const OurPage = () => {
   return (
-    <div className="flex min-h-screen bg-yellow-100 overflow-hidden rounded-2xl">
+    <div className="flex min-h-screen bg-yellow-100 overflow-hidden mt-0">
       {/* Left Section with Text */}
       <div className="w-1/2 flex flex-col justify-center pl-24 pr-24">
         <motion.div
@@ -42,7 +43,7 @@ const OurPage = () => {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="border border-black px-6 py-2 text-sm uppercase tracking-wide hover:bg-black hover:text-white transition-colors"
         >
-          About US
+          <Link to="/About">About US</Link>
         </motion.button>
       </div>
 
@@ -54,7 +55,7 @@ const OurPage = () => {
           transition={{ duration: 0.5, delay: 0.8 }}
           src={ourpageImage} // Use the imported image
           alt="Modern living room with curved white chairs and wooden accents"
-          className="w-full h-full object-cover rounded-2xl"
+          className="w-full h-full object-cover"
         />
       </div>
     </div>
