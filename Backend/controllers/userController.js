@@ -1,19 +1,58 @@
+// Backend/controllers/userController.js
+import userModel from '../models/userModel.js';
+import jwt from 'jsonwebtoken';
 
-
-//Route for user login
-const loginUser = async (req, res) => {
-
-}
-
-//Route for user register
+// Route for user registration
 const registerUser = async (req, res) => {
+  const { name, email, password } = req.body;
 
-  res.json({msg:"register API working"})
+  try {
+    const userExists = await userModel.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ msg: "User already exists" });
+    }
 
-}
+    const user = new userModel({ name, email, password });
+    await user.save();
 
-//Route for admin login
+    res.status(201).json({ msg: "User registered successfully" });
+  } catch (error) {
+    res.status(500).json({ msg: "Error registering user" });
+  }
+};
+
+// Route for user login
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await userModel.findOne({ email }).select('+password');
+    if (user && (await user.matchPassword(password))) {
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      res.json({ token });
+    } else {
+      res.status(401).json({ msg: "Invalid email or password" });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: "Error logging in" });
+  }
+};
+
+// Route for admin login
 const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
 
-}
-export {loginUser, registerUser,adminLogin}
+  try {
+    const user = await userModel.findOne({ email }).select('+password');
+    if (user && (await user.matchPassword(password))) {
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      res.json({ token });
+    } else {
+      res.status(401).json({ msg: "Invalid email or password" });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: "Error logging in" });
+  }
+};
+
+export { loginUser, registerUser, adminLogin };

@@ -1,5 +1,7 @@
+// frontend/src/pages/Auth.jsx
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -32,21 +34,18 @@ const Auth = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission (e.g., send data to the server)
-    console.log('Form submitted:', formData);
-
-    // Clear the form after submission
-    setFormData({
-      name: '',
-      email: '',
-      password: '',
-    });
-    setErrors({});
-
-    // Navigate to the home page or dashboard
-    navigate('/');
+    try {
+      const url = isSignUp ? 'http://localhost:4000/api/user/register' : 'http://localhost:4000/api/user/login';
+      const response = await axios.post(url, formData);
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/');
+      }
+    } catch (error) {
+      setErrors({ msg: error.response.data.msg });
+    }
   };
 
   const toggleForm = () => {
@@ -105,9 +104,6 @@ const Auth = () => {
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
           <div className="flex justify-between mb-4">
-            <Link to="/forgot-password" className="text-blue-500 hover:underline">
-              Forgot your password?
-            </Link>
             <button type="button" onClick={toggleForm} className="text-blue-500 hover:underline">
               {isSignUp ? 'Login Here' : 'Create account'}
             </button>
@@ -115,6 +111,7 @@ const Auth = () => {
           <button type="submit" className="w-full bg-black text-white py-2 rounded hover:bg-gray-800">
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </button>
+          {errors.msg && <p className="text-red-500 text-xs mt-1">{errors.msg}</p>}
         </form>
       </div>
     </div>

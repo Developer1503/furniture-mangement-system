@@ -1,11 +1,11 @@
-// src/App.jsx
+// frontend/src/App.jsx
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Cart from './pages/Cart';
 import AiGen from './pages/Ai_gen';
-import Auth from './pages/Auth'; // Import the Auth component
+import Auth from './pages/Auth';
 import OurPage from './components/OurPage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -16,6 +16,7 @@ import Office from './pages/Office';
 import ProductPage from './pages/ProductPage';
 import Checkout from './pages/Checkout';
 import SearchBar from './components/SearchBar';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   return (
@@ -30,12 +31,12 @@ const App = () => {
           <Route path="/Diningroom" element={<DiningRoom />} />
           <Route path="/office" element={<Office />} />
           <Route path="/About" element={<About />} />
-          <Route path="/Cart" element={<Cart />} />
+          <Route path="/Cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
           <Route path="/Ai_gen" element={<AiGen />} />
-          <Route path="/auth" element={<Auth />} /> {/* Add route for Auth */}
+          <Route path="/auth" element={<Auth />} />
           <Route path="/OurPage" element={<OurPage />} />
           <Route path="/product/:productId" element={<ProductPage />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </main>
