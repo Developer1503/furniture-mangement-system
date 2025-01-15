@@ -1,5 +1,6 @@
+// frontend/src/components/Navbar.jsx
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
 import { ShopContext } from '../context/ShopContext';
 
@@ -9,6 +10,8 @@ const Navbar = () => {
     const { getCartItemCount, setShowSearch } = useContext(ShopContext);
     const cartItemCount = getCartItemCount();
     const dropdownRef = useRef(null);
+    const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
@@ -49,6 +52,10 @@ const Navbar = () => {
 
     const handleSearchToggle = () => {
         setShowSearch(true);
+    };
+
+    const handleProfileClick = () => {
+        navigate('/profile');
     };
 
     useEffect(() => {
@@ -168,15 +175,16 @@ const Navbar = () => {
                         ABOUT
                     </Link>
                 </li>
-                <li>
-                    <img src={assets.ai_gen} alt="Antro Transparent Logo" style={{ height: '2.2rem' }} />
-                </li>
             </ul>
 
             <div style={{ display: 'flex', gap: '1rem' }}>
-                <Link to="/Auth">
-                    <img src={assets.user} alt="User Icon" style={{ width: '1.5rem' }} />
-                </Link>
+                {token ? (
+                    <img src={assets.user} alt="User Icon" style={{ width: '1.5rem', cursor: 'pointer' }} onClick={handleProfileClick} />
+                ) : (
+                    <Link to="/auth">
+                        <img src={assets.user} alt="User Icon" style={{ width: '1.5rem' }} />
+                    </Link>
+                )}
                 <img src={assets.search} alt="Search Icon" style={{ width: '1.5rem', cursor: 'pointer' }} onClick={handleSearchToggle} />
                 <div style={{ position: 'relative' }}>
                     <Link to="/cart">
