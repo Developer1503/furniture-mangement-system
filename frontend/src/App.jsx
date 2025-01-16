@@ -17,6 +17,7 @@ import ProductPage from './pages/ProductPage';
 import Checkout from './pages/Checkout';
 import SearchBar from './components/SearchBar';
 import PrivateRoute from './components/PrivateRoute';
+import Profile from './pages/Profile'; 
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/OurPage" element={<OurPage />} />
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
+          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} /> 
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </main>
