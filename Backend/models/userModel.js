@@ -1,4 +1,3 @@
-// Backend/models/userModel.js
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
 
@@ -6,6 +5,25 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  phone: { type: String },
+  profilePicture: { type: String },
+  username: { type: String, unique: true },
+  createdAt: { type: Date, default: Date.now },
+  lastLogin: { type: Date },
+  shippingAddress: {
+    street: { type: String },
+    city: { type: String },
+    state: { type: String },
+    zipcode: { type: String },
+    country: { type: String },
+  },
+  billingAddress: {
+    street: { type: String },
+    city: { type: String },
+    state: { type: String },
+    zipcode: { type: String },
+    country: { type: String },
+  },
   cartData: { type: Object, default: {} },
 }, { minimize: false });
 

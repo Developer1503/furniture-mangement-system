@@ -1,10 +1,10 @@
-// Backend/controllers/userController.js
 import userModel from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 // Route for user registration
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, phone, profilePicture, username } = req.body;
 
   try {
     const userExists = await userModel.findOne({ email });
@@ -12,7 +12,15 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ msg: "User already exists" });
     }
 
-    const user = new userModel({ name, email, password });
+    const user = new userModel({
+      name,
+      email,
+      password,
+      phone,
+      profilePicture,
+      username,
+    });
+
     await user.save();
 
     res.status(201).json({ msg: "User registered successfully" });
@@ -28,6 +36,8 @@ const loginUser = async (req, res) => {
   try {
     const user = await userModel.findOne({ email }).select('+password');
     if (user && (await user.matchPassword(password))) {
+      user.lastLogin = new Date();
+      await user.save();
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
       res.json({ token });
     } else {
