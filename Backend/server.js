@@ -1,13 +1,12 @@
-// Backend/server.js
 import express from 'express';
 import cors from 'cors';
 import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import userRouter from './routes/userRoute.js';
-import profileRoutes from './routes/profileRoute.js'; // Ensure this path is correct
-import dotenv from 'dotenv'; // Or use require('dotenv') for CommonJS
-dotenv.config();
+import profileRoutes from './routes/profileRoute.js';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -16,13 +15,15 @@ connectDB();
 connectCloudinary();
 
 app.use(express.json());
+
+// Update CORS configuration to allow requests from the frontend origin
 app.use(cors({
-  origin: 'http://localhost:4000', // Update this to match your frontend URL
+  origin: 'http://localhost:5173', // Update this to match your frontend URL
   credentials: true,
 }));
 
 app.use('/api/user', userRouter);
-app.use('/api/user', profileRoutes); // Ensure this path is correct
+app.use('/api/user', profileRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World');

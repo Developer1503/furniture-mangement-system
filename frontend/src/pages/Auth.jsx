@@ -1,4 +1,3 @@
-// frontend/src/pages/Auth.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -39,12 +38,13 @@ const Auth = () => {
     try {
       const url = isSignUp ? 'http://localhost:4000/api/user/register' : 'http://localhost:4000/api/user/login';
       const response = await axios.post(url, formData);
-      if (response.data.token) {
+      if (response.data && response.data.token) {
         localStorage.setItem('token', response.data.token);
-        navigate('/');
+        navigate('/profile'); // Redirect to profile page after successful login
       }
     } catch (error) {
-      setErrors({ msg: error.response.data.msg });
+      console.error('Error during authentication:', error);
+      setErrors({ msg: error.response?.data?.msg || 'An error occurred during authentication' });
     }
   };
 
