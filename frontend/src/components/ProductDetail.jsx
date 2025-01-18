@@ -25,7 +25,7 @@ const ProductDetail = ({ productId }) => {
               src={img}
               alt={`Thumbnail ${index + 1}`}
               onClick={() => setMainImage(img)}
-              className="thumbnail"
+              className={`thumbnail ${img === mainImage ? 'active' : ''}`}
             />
           ))}
         </div>
@@ -45,6 +45,9 @@ const DetailWrapper = styled.section`
   flex-direction: row;
   align-items: flex-start;
   padding: 2.4rem;
+  background-color: #f8f4ea;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   @media screen and (min-width: 600px) {
     padding: 2.4rem 4rem;
@@ -56,7 +59,7 @@ const DetailWrapper = styled.section`
 
   .image-section {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-right: 2rem;
 
     .thumbnails {
@@ -65,19 +68,29 @@ const DetailWrapper = styled.section`
       margin-bottom: 1rem;
 
       .thumbnail {
-        max-width: 100px;
-        max-height: 100px;
+        max-width: 150px;
+        max-height: 150px;
         margin-bottom: 0.5rem;
         cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.3s ease;
+
+        &.active {
+          border-color: #007BFF;
+        }
       }
     }
 
     .main-image {
       img {
-        max-width: 400px;
-        max-height: 400px;
+        max-width: 600px;
+        max-height: 600px;
         width: auto;
         height: auto;
+        border: 2px solid #ddd;
+        padding: 10px;
+        background-color: #fff;
+        /* Removed the hover zoom effect */
       }
     }
   }

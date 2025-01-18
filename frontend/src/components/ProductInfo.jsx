@@ -30,31 +30,14 @@ const ProductInfo = ({ productId }) => {
 
   return (
     <InfoWrapper>
+      <div className="breadcrumbs">
+        <span>Home</span> &gt; <span>{category}</span> &gt; <span>{name}</span>
+      </div>
       <div className="product-info">
         <div className="left-section">
           {product.bestseller && <span className="bestseller-badge">BESTSELLER</span>}
           <span className="category-label">{category}</span>
           <h2 className="product-name">{name}</h2>
-          <div className="tabs">
-            <button className={activeTab === 'description' ? 'active' : ''} onClick={() => handleTabChange('description')}>Description</button>
-            <button className={activeTab === 'specifications' ? 'active' : ''} onClick={() => handleTabChange('specifications')}>Specifications</button>
-            <button className={activeTab === 'features' ? 'active' : ''} onClick={() => handleTabChange('features')}>Features</button>
-          </div>
-          {activeTab === 'description' && <p className="product-description">{description}</p>}
-          {activeTab === 'specifications' && (
-            <div className="specifications">
-              <p><strong>Dimensions:</strong> {dimensions || 'N/A'}</p>
-              <p><strong>Weight Capacity:</strong> {weightCapacity || 'N/A'}</p>
-              <p><strong>Materials:</strong> {materials || 'N/A'}</p>
-            </div>
-          )}
-          {activeTab === 'features' && (
-            <ul className="features">
-              {features && features.map((feature, index) => (
-                <li key={index}>{feature}</li>
-              ))}
-            </ul>
-          )}
           <div className="pricing">
             <p className="price">
               {currency}
@@ -69,6 +52,43 @@ const ProductInfo = ({ productId }) => {
               <p className="original-price">{currency}{price.toFixed(2)}</p>
             )}
           </div>
+          <div className="tabs">
+            <button className={activeTab === 'description' ? 'active' : ''} onClick={() => handleTabChange('description')}>Description</button>
+            <button className={activeTab === 'specifications' ? 'active' : ''} onClick={() => handleTabChange('specifications')}>Specifications</button>
+            <button className={activeTab === 'features' ? 'active' : ''} onClick={() => handleTabChange('features')}>Features</button>
+          </div>
+          {activeTab === 'description' && (
+            <p className="product-description">
+              {description}
+              {materials && <><br /><br />Materials: {materials}</>}
+              {dimensions && <><br />Dimensions: {dimensions}</>}
+              {features && features.length > 0 && <><br />Unique Features: {features.join(', ')}</>}
+            </p>
+          )}
+          {activeTab === 'specifications' && (
+            <div className="specifications">
+              {dimensions && <p><strong>Dimensions:</strong> {dimensions}</p>}
+              {weightCapacity && <p><strong>Weight Capacity:</strong> {weightCapacity}</p>}
+              {materials && <p><strong>Materials:</strong> {materials}</p>}
+              {specifications.storageCapacity && <p><strong>Storage Capacity:</strong> {specifications.storageCapacity}</p>}
+            </div>
+          )}
+          {activeTab === 'features' && (
+            <ul className="features">
+              {features && features.map((feature, index) => (
+                <li key={index}>{feature}</li>
+              ))}
+            </ul>
+          )}
+          <div className="quantity-selector">
+            <button onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>-</button>
+            <span>{quantity}</span>
+            <button onClick={() => setQuantity(quantity + 1)}>+</button>
+          </div>
+          <div className="cta-section">
+            <button className="buy-now" onClick={handleAddToCart}>BUY NOW</button>
+            <button className="save-for-later">SAVE FOR LATER</button>
+          </div>
           {colors && (
             <div className="color-options">
               {colors.map((color, index) => (
@@ -81,27 +101,12 @@ const ProductInfo = ({ productId }) => {
               ))}
             </div>
           )}
-          <div className="quantity-selector">
-            <button onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>-</button>
-            <span>{quantity}</span>
-            <button onClick={() => setQuantity(quantity + 1)}>+</button>
-          </div>
-          <button className="add-to-cart" onClick={handleAddToCart}>ADD TO CART</button>
-        </div>
-        <div className="right-section">
-          <div className="cta-section">
-            <button className="buy-now">BUY NOW</button>
-            <button className="save-for-later">SAVE FOR LATER</button>
-            <p className="delivery-date">Delivered by: 2023-01-15</p>
-            <p className="shipping-costs">Estimated Shipping: $10.00</p>
-          </div>
           <div className="additional-info">
             <p><strong>Warranty:</strong> {warranty || 'N/A'}</p>
           </div>
           <div className="trust-elements">
-            <p>100% Genuine Product</p>
-            <p>Free Delivery Available</p>
-            <p>7-Day Easy Return Policy</p>
+            <p><i className="fas fa-truck"></i> Free Delivery Available</p>
+            <p><i className="fas fa-sync-alt"></i> 7-Day Easy Return Policy</p>
           </div>
           <div className="reviews">
             <h3>Customer Reviews ({reviews ? reviews.length : 0})</h3>
@@ -131,6 +136,20 @@ const InfoWrapper = styled.section`
 
   @media screen and (min-width: 768px) {
     margin: 0 auto;
+  }
+
+  .breadcrumbs {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #888;
+
+    span {
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .product-info {
@@ -168,13 +187,21 @@ const InfoWrapper = styled.section`
         display: block;
       }
       .product-name {
-        font-size: 2.8rem;
+        font-size: 2rem; /* Adjusted font size */
         font-weight: 700;
         margin-bottom: 1.5rem;
+        white-space: nowrap; /* Prevent the text from breaking into multiple lines */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* Limit to 1 line */
+        -webkit-box-orient: vertical;
       }
       .tabs {
         display: flex;
         margin-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+
         button {
           background: none;
           border: none;
@@ -182,6 +209,8 @@ const InfoWrapper = styled.section`
           margin-right: 1rem;
           font-size: 1rem;
           font-weight: bold;
+          padding: 0.5rem 1rem;
+
           &.active {
             border-bottom: 2px solid #007bff;
             color: #007bff;
@@ -192,14 +221,14 @@ const InfoWrapper = styled.section`
         font-size: 1.5rem;
         color: hsl(var(--dark-grayish-blue));
         line-height: 2.5rem;
-        margin-bottom: 2.4rem;
+        margin-bottom: 2rem;
       }
       .pricing {
         display: flex;
         align-items: center;
         margin-bottom: 2rem;
         .price {
-          font-size: 2.8rem;
+          font-size: 2.2rem;
           font-weight: 700;
           margin-right: 1rem;
         }
@@ -247,25 +276,6 @@ const InfoWrapper = styled.section`
           margin: 0 0.5rem;
         }
       }
-      .add-to-cart {
-        background-color: #007bff;
-        color: #fff;
-        padding: 0.7rem 1.4rem;
-        border: none;
-        border-radius: 4px;
-        font-size: 1rem;
-        margin-top: 1rem;
-        cursor: pointer;
-      }
-    }
-
-    .right-section {
-      width: 100%;
-
-      @media screen and (min-width: 768px) {
-        width: 40%;
-      }
-
       .cta-section {
         display: flex;
         flex-direction: column;
@@ -309,6 +319,12 @@ const InfoWrapper = styled.section`
         p {
           font-size: 1rem;
           color: #555;
+          display: flex;
+          align-items: center;
+
+          i {
+            margin-right: 0.5rem;
+          }
         }
       }
       .reviews {
