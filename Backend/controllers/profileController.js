@@ -1,6 +1,6 @@
+// Backend/controllers/profileController.js
 import userModel from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 
 // Get user profile
 const getProfile = async (req, res) => {
@@ -20,17 +20,12 @@ const getProfile = async (req, res) => {
 // Update user profile
 const updateProfile = async (req, res) => {
   const userId = req.user._id;
-  const { name, email, phone, profilePicture, username, shippingAddress, billingAddress } = req.body;
+  const { name, email } = req.body;
   try {
     const user = await userModel.findById(userId);
     if (user) {
       user.name = name;
       user.email = email;
-      user.phone = phone;
-      user.profilePicture = profilePicture;
-      user.username = username;
-      user.shippingAddress = shippingAddress;
-      user.billingAddress = billingAddress;
       await user.save();
       res.json({ msg: "Profile updated successfully" });
     } else {
