@@ -1,16 +1,16 @@
+// Backend/server.js
 import express from 'express';
 import cors from 'cors';
 import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import userRouter from './routes/userRoute.js';
 import profileRoutes from './routes/profileRoute.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import adminRouter from './routes/adminRoutes.js'; // Import the new admin routes
+import 'dotenv/config'
+import productRouter from './routes/ProductRoute.js';
 
 const app = express();
 const port = process.env.PORT || 4000;
-
 connectDB();
 connectCloudinary();
 
@@ -23,7 +23,9 @@ app.use(cors({
 }));
 
 app.use('/api/user', userRouter);
+app.use('/api/product',productRouter)
 app.use('/api/user', profileRoutes);
+app.use('/api/admin', adminRouter); // Use the new admin routes
 
 app.get('/', (req, res) => {
   res.send('Hello World');
