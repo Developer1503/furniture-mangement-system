@@ -43,6 +43,7 @@ const Auth = () => {
       const response = await axios.post(url, formData);
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         navigate('/profile'); // Redirect to profile page after successful login
       }
     } catch (error) {

@@ -1,4 +1,3 @@
-// frontend/src/App.jsx
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -17,7 +16,9 @@ import ProductPage from './pages/ProductPage';
 import Checkout from './pages/Checkout';
 import SearchBar from './components/SearchBar';
 import PrivateRoute from './components/PrivateRoute';
-import Profile from './pages/Profile'; 
+import Profile from './pages/Profile';
+import AdminDashboard from './pages/AdminDashboard';
+import AddProduct from './pages/AddProduct';
 
 const App = () => {
   return (
@@ -38,7 +39,9 @@ const App = () => {
           <Route path="/OurPage" element={<OurPage />} />
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
-          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} /> 
+          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="/admin" element={<PrivateRoute role="admin"><AdminDashboard /></PrivateRoute>} />
+          <Route path="/admin/add-product" element={<PrivateRoute role="admin"><AddProduct /></PrivateRoute>} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </main>

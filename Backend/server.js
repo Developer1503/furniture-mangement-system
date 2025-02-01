@@ -5,9 +5,14 @@ import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import userRouter from './routes/userRoute.js';
 import profileRoutes from './routes/profileRoute.js';
-import adminRouter from './routes/adminRoutes.js'; // Import the new admin routes
-import 'dotenv/config'
 import productRouter from './routes/ProductRoute.js';
+import adminRouter from './routes/adminRoutes.js';
+import dotenv from 'dotenv';
+
+dotenv.config(); // Load environment variables from .env file
+
+console.log('Environment Variables:', process.env); // Print all environment variables
+console.log('MONGO_URI:', process.env.MONGO_URI); // Add this line to check if MONGO_URI is loaded
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -16,16 +21,15 @@ connectCloudinary();
 
 app.use(express.json());
 
-// Update CORS configuration to allow requests from the frontend origin
 app.use(cors({
-  origin: 'http://localhost:5173', // Update this to match your frontend URL
+  origin: 'http://localhost:5173',
   credentials: true,
 }));
 
 app.use('/api/user', userRouter);
-app.use('/api/product',productRouter)
+app.use('/api/product', productRouter);
 app.use('/api/user', profileRoutes);
-app.use('/api/admin', adminRouter); // Use the new admin routes
+app.use('/api/admin', adminRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World');
