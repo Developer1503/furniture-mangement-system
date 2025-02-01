@@ -88,7 +88,6 @@ Edit
 - **API Endpoints**  
 - **License and Contribution Info**  
 
-This README is **detailed yet concise**, perfect for GitHub! Let me know if you need modifications. 🚀
 
 
 
