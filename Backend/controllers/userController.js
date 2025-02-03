@@ -1,6 +1,5 @@
 import userModel from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 
 const UserRoles = {
   ADMIN: 'admin',

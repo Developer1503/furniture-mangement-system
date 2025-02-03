@@ -1,4 +1,3 @@
-// Backend/routes/adminRoutes.js
 import express from 'express';
 import { protect, authorize } from '../middleware/authMiddleware.js';
 import { getUsers, deleteUser, getOrders, updateOrderStatus, addProduct, editProduct, deleteProduct, getProducts } from '../controllers/adminController.js';

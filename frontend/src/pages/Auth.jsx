@@ -11,6 +11,7 @@ const Auth = () => {
     phone: '',
     profilePicture: '',
     username: '',
+    role: 'customer', // Default role to 'customer'
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ const Auth = () => {
       phone: '',
       profilePicture: '',
       username: '',
+      role: 'customer', // Default role to 'customer'
     });
     setErrors({});
   };
@@ -138,6 +140,17 @@ const Auth = () => {
                   onChange={handleChange}
                   value={formData.username}
                 />
+              </div>
+              <div className="mb-4">
+                <select
+                  name="role"
+                  className="w-full p-2 border rounded bg-gray-100"
+                  onChange={handleChange}
+                  value={formData.role}
+                >
+                  <option value="customer">Customer</option>
+                  <option value="admin">Admin</option>
+                </select>
               </div>
             </>
           )}

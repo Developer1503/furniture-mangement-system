@@ -93,7 +93,6 @@ const Checkout = () => {
                   value={formData.firstName}
                   required
                 />
-                {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
               </div>
               <div className="w-1/2">
                 <label htmlFor="lastName" className="block mb-1">Last Name*</label>
@@ -107,7 +106,6 @@ const Checkout = () => {
                   value={formData.lastName}
                   required
                 />
-                {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
               </div>
             </div>
             <div className="mb-4">
