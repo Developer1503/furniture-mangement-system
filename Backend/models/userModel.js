@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   phone: { type: String },
-  profilePicture: { type: String },
+  profilePicture: { type: String }, // URL of the profile picture
   username: { type: String, unique: true },
   role: {
     type: String,
