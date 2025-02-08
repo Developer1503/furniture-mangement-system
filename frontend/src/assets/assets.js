@@ -78,6 +78,7 @@ import gpay from './gpay.png';
 import mastercard from './mastercard.png';
 import stripe from './stripe.png';
 import cash from './cash.png';
+import Glogo from './Glogo.png';
 
 export const assets = {
   home_img,
@@ -160,6 +161,7 @@ export const assets = {
   mastercard,
   gpay,
   razorpay,
+  Glogo,
 };
 
 export const products = [

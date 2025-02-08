@@ -1,3 +1,4 @@
+// backend/routes/profileRoute.js
 import express from 'express';
 import { getProfile, updateProfile, updatePassword } from '../controllers/profileController.js';
 import { protect } from '../middleware/authMiddleware.js';
@@ -11,4 +12,4 @@ profileRoutes.route('/profile')
 
 profileRoutes.route('/profile/password').put(protect, updatePassword);
 
-export default profileRoutes;
+export { profileRoutes };
