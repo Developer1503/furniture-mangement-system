@@ -1,4 +1,3 @@
-// backend/server.js
 import express from 'express';
 import cors from 'cors';
 import connectDB from './config/mongodb.js';
@@ -9,7 +8,7 @@ import { productRouter } from './routes/ProductRoute.js';
 import { adminRouter } from './routes/adminRoutes.js';
 import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
-import passport from './Passport.js';
+import passport from './passport.js';
 import session from 'express-session';
 
 dotenv.config();

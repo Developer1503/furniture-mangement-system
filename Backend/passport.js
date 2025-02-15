@@ -1,10 +1,12 @@
-// backend/passport.js
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import UserModel from './models/userModel.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
+
+console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
