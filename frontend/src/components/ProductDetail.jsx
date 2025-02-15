@@ -42,15 +42,16 @@ const ProductDetail = ({ productId }) => {
 
 const DetailWrapper = styled.section`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
-  padding: 2.4rem;
+  padding: 1.2rem;
   background-color: #f8f4ea;
   border: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   @media screen and (min-width: 600px) {
-    padding: 2.4rem 4rem;
+    padding: 2.4rem;
+    flex-direction: row;
   }
 
   @media screen and (min-width: 768px) {
@@ -59,18 +60,25 @@ const DetailWrapper = styled.section`
 
   .image-section {
     display: flex;
-    flex-direction: row;
-    margin-right: 2rem;
+    flex-direction: column;
+    margin-right: 1rem;
+    width: 100%;
+
+    @media screen and (min-width: 600px) {
+      flex-direction: row;
+      margin-right: 2rem;
+    }
 
     .thumbnails {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       margin-bottom: 1rem;
+      overflow-x: auto;
 
       .thumbnail {
-        max-width: 150px;
-        max-height: 150px;
-        margin-bottom: 0.5rem;
+        max-width: 100px;
+        max-height: 100px;
+        margin-right: 0.5rem;
         cursor: pointer;
         border: 2px solid transparent;
         transition: border-color 0.3s ease;
@@ -83,14 +91,13 @@ const DetailWrapper = styled.section`
 
     .main-image {
       img {
-        max-width: 600px;
-        max-height: 600px;
+        max-width: 100%;
+        max-height: 400px;
         width: auto;
         height: auto;
         border: 2px solid #ddd;
         padding: 10px;
         background-color: #fff;
-        /* Removed the hover zoom effect */
       }
     }
   }

@@ -17,7 +17,6 @@ const ProductInfo = ({ productId }) => {
 
   const { name, description, price, isOnSale, salePercent, category, date, dimensions, weightCapacity, materials, warranty, reviews, specifications, features, colors } = product;
 
-  // Ensure price and salePercent are defined
   const discount = salePercent !== undefined ? salePercent : 1;
 
   const handleTabChange = (tab) => {
@@ -128,10 +127,10 @@ const InfoWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 2.4rem;
+  padding: 1.2rem;
 
   @media screen and (min-width: 600px) {
-    padding: 2.4rem 4rem;
+    padding: 2.4rem;
   }
 
   @media screen and (min-width: 768px) {
@@ -187,14 +186,14 @@ const InfoWrapper = styled.section`
         display: block;
       }
       .product-name {
-        font-size: 2rem; /* Adjusted font size */
+        font-size: 2rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
-        white-space: nowrap; /* Prevent the text from breaking into multiple lines */
+        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 1; /* Limit to 1 line */
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
       }
       .tabs {
