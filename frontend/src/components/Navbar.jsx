@@ -5,6 +5,7 @@ import { ShopContext } from '../context/ShopContext';
 
 const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState('livingroom');
   const { getCartItemCount, setShowSearch } = useContext(ShopContext);
   const cartItemCount = getCartItemCount();
@@ -58,6 +59,10 @@ const Navbar = () => {
     navigate('/profile');
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -66,156 +71,104 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '0.5rem 1rem',
-      backgroundColor: 'white',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-      position: 'relative',
-    }}>
-      <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
-        <img src={assets.Antro_transparent} alt="Antro Logo" style={{ height: '1.5rem' }} />
+    <nav className="bg-white shadow-md p-4 flex justify-between items-center relative z-50">
+      <Link to="/" className="flex items-center">
+        <img src={assets.Antro_transparent} alt="Antro Logo" className="h-6" />
       </Link>
 
-      <ul style={{ display: 'flex', gap: '1.5rem', listStyle: 'none', margin: 0, padding: 0 }}>
-        <li>
-          <Link to="/" style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, textDecoration: 'none', color: 'black', transition: 'color 0.3s ease' }}
-            onMouseEnter={(e) => e.target.style.color = '#007BFF'}
-            onMouseLeave={(e) => e.target.style.color = 'black'}>
-            HOME
-          </Link>
-        </li>
-
-        <li style={{ position: 'relative' }}>
-          <button
-            onClick={toggleDropdown}
-            style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, cursor: 'pointer', textDecoration: 'none', color: 'black', transition: 'color 0.3s ease', background: 'none', border: 'none' }}
-            onMouseEnter={(e) => e.target.style.color = '#007BFF'}
-            onMouseLeave={(e) => e.target.style.color = 'black'}>
-            CATEGORIES
-          </button>
+      <div className="hidden md:flex space-x-4">
+        <Link to="/" className="text-black hover:text-blue-500 font-bold">HOME</Link>
+        <div className="relative" ref={dropdownRef}>
+          <button onClick={toggleDropdown} className="text-black hover:text-blue-500 font-bold">CATEGORIES</button>
           {isDropdownVisible && (
-            <div ref={dropdownRef} style={{
-              position: 'absolute',
-              top: '100%',
-              left: 0,
-              backgroundColor: '#FFE296',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-              listStyle: 'none',
-              margin: 0,
-              zIndex: 20,
-              padding: '0.5rem',
-              borderRadius: '4px',
-              width: '400px',
-              display: 'flex',
-              flexDirection: 'column',
-            }}>
-              <button
-                onClick={closeDropdown}
-                style={{
-                  alignSelf: 'flex-start',
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '1rem',
-                  cursor: 'pointer',
-                  marginBottom: '0.5rem',
-                }}
-              >
-                &times;
-              </button>
-              <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                <ul style={{ margin: 0, padding: 0, listStyle: 'none', flexGrow: 1 }}>
+            <div className="absolute top-full left-0 bg-yellow-200 shadow-md p-4 rounded-lg w-64 z-50">
+              <button onClick={closeDropdown} className="absolute top-2 right-2 text-red-500">&times;</button>
+              <div className="flex space-x-4">
+                <ul className="space-y-2">
                   {['livingroom', 'bedroom', 'office', 'diningroom'].map((item) => (
-                    <li
-                      key={item}
-                      style={{ padding: '0.5rem 1rem', backgroundColor: '#FFE296', position: 'relative' }}
-                      onMouseEnter={() => handleMouseEnter(item)}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <Link to={`/${item}`} style={{ textDecoration: 'none', color: 'black', display: 'block', padding: '0.5rem', transition: 'background-color 0.3s ease, box-shadow 0.3s ease' }}
-                        onMouseEnter={(e) => {
-                          e.target.style.backgroundColor = '#FFDAB7';
-                          e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.backgroundColor = '#FFE296';
-                          e.target.style.boxShadow = 'none';
-                        }}>
+                    <li key={item} className="hover:bg-yellow-300 p-2 rounded-lg">
+                      <Link to={`/${item}`} className="block text-black hover:text-blue-500" onMouseEnter={() => handleMouseEnter(item)} onMouseLeave={handleMouseLeave}>
                         {item.charAt(0).toUpperCase() + item.slice(1)}
                       </Link>
                     </li>
                   ))}
                 </ul>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexGrow: 1 }}>
-                  <img
-                    src={getImageSrc()}
-                    alt={hoveredItem}
-                    style={{
-                      width: '15rem',
-                      height: '10rem',
-                      transition: 'opacity 0.3s ease, transform 0.3s ease',
-                      opacity: 1,
-                      transform: 'scale(1)',
-                    }}
-                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-                  />
+                <div className="flex items-center justify-center">
+                  <img src={getImageSrc()} alt={hoveredItem} className="w-40 h-24 object-cover rounded-lg transition-transform transform scale-100 hover:scale-105" />
                 </div>
               </div>
             </div>
           )}
-        </li>
-
-        <li>
-          <Link to="/about" style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, textDecoration: 'none', color: 'black', transition: 'color 0.3s ease' }}
-            onMouseEnter={(e) => e.target.style.color = '#007BFF'}
-            onMouseLeave={(e) => e.target.style.color = 'black'}>
-            ABOUT
-          </Link>
-        </li>
+        </div>
+        <Link to="/about" className="text-black hover:text-blue-500 font-bold">ABOUT</Link>
         {user && user.role === 'admin' && (
-          <li>
-            <Link to="/admin" style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, textDecoration: 'none', color: 'black', transition: 'color 0.3s ease' }}
-              onMouseEnter={(e) => e.target.style.color = '#007BFF'}
-              onMouseLeave={(e) => e.target.style.color = 'black'}>
-              ADMIN
-            </Link>
-          </li>
+          <Link to="/admin" className="text-black hover:text-blue-500 font-bold">ADMIN</Link>
         )}
-      </ul>
+      </div>
 
-      <div style={{ display: 'flex', gap: '1rem' }}>
+      <div className="flex space-x-4 items-center">
         {token ? (
-          <img src={assets.user} alt="User Icon" style={{ width: '1.5rem', cursor: 'pointer' }} onClick={handleProfileClick} />
+          <img src={assets.user} alt="User Icon" className="w-6 cursor-pointer" onClick={handleProfileClick} />
         ) : (
           <Link to="/auth">
-            <img src={assets.user} alt="User Icon" style={{ width: '1.5rem' }} />
+            <img src={assets.user} alt="User Icon" className="w-6" />
           </Link>
         )}
-        <img src={assets.search} alt="Search Icon" style={{ width: '1.5rem', cursor: 'pointer' }} onClick={handleSearchToggle} />
-        <div style={{ position: 'relative' }}>
+        <img src={assets.search} alt="Search Icon" className="w-6 cursor-pointer" onClick={handleSearchToggle} />
+        <div className="relative">
           <Link to="/cart">
-            <img src={assets.shopping_cart} alt="Shopping Cart" style={{ width: '1.5rem' }} />
+            <img src={assets.shopping_cart} alt="Shopping Cart" className="w-6" />
           </Link>
           {cartItemCount > 0 && (
-            <span style={{
-              position: 'absolute',
-              bottom: '0',
-              left: '0',
-              backgroundColor: '#ff0000',
-              color: '#fff',
-              borderRadius: '50%',
-              padding: '0.2rem 0.5rem',
-              fontSize: '0.8rem',
-              transform: 'translate(-50%, 50%)'
-            }}>
-              {cartItemCount}
-            </span>
+            <span className="absolute -bottom-2 -left-2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">{cartItemCount}</span>
           )}
         </div>
+        <button onClick={toggleMobileMenu} className="md:hidden text-2xl">&#9776;</button>
       </div>
+
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-md p-4 space-y-4 z-50">
+          <Link to="/" className="block text-black hover:text-blue-500 font-bold">HOME</Link>
+          <button onClick={toggleDropdown} className="text-black hover:text-blue-500 font-bold">CATEGORIES</button>
+          {isDropdownVisible && (
+            <div className="bg-yellow-200 shadow-md p-4 rounded-lg w-full space-y-2">
+              <button onClick={closeDropdown} className="text-red-500">&times;</button>
+              <ul className="space-y-2">
+                {['livingroom', 'bedroom', 'office', 'diningroom'].map((item) => (
+                  <li key={item} className="hover:bg-yellow-300 p-2 rounded-lg">
+                    <Link to={`/${item}`} className="block text-black hover:text-blue-500" onMouseEnter={() => handleMouseEnter(item)} onMouseLeave={handleMouseLeave}>
+                      {item.charAt(0).toUpperCase() + item.slice(1)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-center justify-center">
+                <img src={getImageSrc()} alt={hoveredItem} className="w-40 h-24 object-cover rounded-lg transition-transform transform scale-100 hover:scale-105" />
+              </div>
+            </div>
+          )}
+          <Link to="/about" className="block text-black hover:text-blue-500 font-bold">ABOUT</Link>
+          {user && user.role === 'admin' && (
+            <Link to="/admin" className="block text-black hover:text-blue-500 font-bold">ADMIN</Link>
+          )}
+          {token ? (
+            <img src={assets.user} alt="User Icon" className="w-6 cursor-pointer" onClick={handleProfileClick} />
+          ) : (
+            <Link to="/auth">
+              <img src={assets.user} alt="User Icon" className="w-6" />
+            </Link>
+          )}
+          <img src={assets.search} alt="Search Icon" className="w-6 cursor-pointer" onClick={handleSearchToggle} />
+          <div className="relative">
+            <Link to="/cart">
+              <img src={assets.shopping_cart} alt="Shopping Cart" className="w-6" />
+            </Link>
+            {cartItemCount > 0 && (
+              <span className="absolute -bottom-2 -left-2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">{cartItemCount}</span>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
