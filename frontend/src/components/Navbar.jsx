@@ -104,6 +104,9 @@ const Navbar = () => {
         {user && user.role === 'admin' && (
           <Link to="/admin" className="text-black hover:text-blue-500 font-bold">ADMIN</Link>
         )}
+        <Link to="/ai_gen" className="text-black hover:text-blue-500 font-bold">
+          <img src={assets.ai_gen} alt="AI Gen" className="h-6" />
+        </Link>
       </div>
 
       <div className="flex space-x-4 items-center">
@@ -151,6 +154,9 @@ const Navbar = () => {
           {user && user.role === 'admin' && (
             <Link to="/admin" className="block text-black hover:text-blue-500 font-bold">ADMIN</Link>
           )}
+          <Link to="/ai_gen" className="block text-black hover:text-blue-500 font-bold">
+            <img src={assets.ai_gen} alt="AI Gen" className="h-6" />
+          </Link>
           {token ? (
             <img src={assets.user} alt="User Icon" className="w-6 cursor-pointer" onClick={handleProfileClick} />
           ) : (
