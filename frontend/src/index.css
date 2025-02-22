@@ -30,3 +30,9 @@ body {
   height: 200px; /* Adjust the height as needed */
   object-fit: cover; /* Ensure the image covers the container without distortion */
 }
+/* Add this CSS to your stylesheet */
+@media (max-width: 600px) {
+  .hide-on-small {
+    display: none;
+  }
+}

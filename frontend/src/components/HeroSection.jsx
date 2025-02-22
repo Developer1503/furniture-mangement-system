@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { assets } from '../assets/assets'; // Ensure this path is correct
 
-const Herosection = () => {
+const HeroSection = () => {
   return (
     <section className="relative min-h-screen w-full bg-cover bg-center bg-no-repeat"
       style={{
@@ -33,14 +32,14 @@ const Herosection = () => {
         </div>
 
         {/* Additional Text */}
-        <div data-layer="Our practice is Designing Complete Environments exceptional buildings , communities and place in special situations, where a unique history" className="OurPracticeIsDesigningCompleteEnvironmentsExceptionalBuildingsCommunitiesAndPlaceInSpecialSituationsWhereAUniqueHistory text-center text-white text-xl font-normal font-['Roboto']"
+        <div data-layer="Our practice is Designing Complete Environments exceptional buildings , communities and place in special situations, where a unique history" className="OurPracticeIsDesigningCompleteEnvironmentsExceptionalBuildingsCommunitiesAndPlaceInSpecialSituationsWhereAUniqueHistory text-center text-white text-xl font-normal font-['Roboto'] hide-on-small"
           style={{
             position: "absolute",
             top: "55%", // Adjust position as needed
             left: "50%", // Horizontally center
             transform: "translate(-50%, -50%)", // Adjust for perfect centering
             fontSize: "1rem", // Set font size to 16px
-            color: "white", // Set font color to white
+            color: "white", // Set font color to white,
           }}>
           Our practice is Designing Complete Environments exceptional buildings<br/>, communities and place in special situations, where a unique history
         </div>
@@ -49,4 +48,4 @@ const Herosection = () => {
   );
 };
 
-export default Herosection;
+export default HeroSection;
