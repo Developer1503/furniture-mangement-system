@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
 import { ShopContext } from '../context/ShopContext';
 
 const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState('livingroom');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { getCartItemCount, setShowSearch } = useContext(ShopContext);
   const cartItemCount = getCartItemCount();
   const dropdownRef = useRef(null);
@@ -157,22 +157,6 @@ const Navbar = () => {
           <Link to="/ai_gen" className="block text-black hover:text-blue-500 font-bold">
             <img src={assets.ai_gen} alt="AI Gen" className="h-6" />
           </Link>
-          {token ? (
-            <img src={assets.user} alt="User Icon" className="w-6 cursor-pointer" onClick={handleProfileClick} />
-          ) : (
-            <Link to="/auth">
-              <img src={assets.user} alt="User Icon" className="w-6" />
-            </Link>
-          )}
-          <img src={assets.search} alt="Search Icon" className="w-6 cursor-pointer" onClick={handleSearchToggle} />
-          <div className="relative">
-            <Link to="/cart">
-              <img src={assets.shopping_cart} alt="Shopping Cart" className="w-6" />
-            </Link>
-            {cartItemCount > 0 && (
-              <span className="absolute -bottom-2 -left-2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">{cartItemCount}</span>
-            )}
-          </div>
         </div>
       )}
     </nav>
