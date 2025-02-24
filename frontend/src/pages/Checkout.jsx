@@ -72,6 +72,12 @@ const Checkout = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const getEstimatedDeliveryDate = () => {
+    const deliveryDate = new Date();
+    deliveryDate.setDate(deliveryDate.getDate() + 6);
+    return deliveryDate.toLocaleDateString(); // Format the date as per your requirement
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Main Content */}
@@ -245,7 +251,7 @@ const Checkout = () => {
             </label>
           </div>
           <div className="mt-4">
-            <p className="text-gray-700">Estimated Delivery Date: TBD</p>
+            <p className="text-gray-700">Estimated Delivery Date: {getEstimatedDeliveryDate()}</p>
           </div>
         </div>
       </div>

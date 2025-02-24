@@ -10,6 +10,12 @@ const Cart = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const getEstimatedDeliveryDate = () => {
+    const deliveryDate = new Date();
+    deliveryDate.setDate(deliveryDate.getDate() + 6);
+    return deliveryDate.toLocaleDateString(); // Format the date as per your requirement
+  };
+
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
@@ -50,15 +56,15 @@ const Cart = () => {
               <p className="text-gray-700">Shipping: Calculate</p>
               <p className="text-gray-700">Tax: TBD</p>
               <p className="text-gray-700">Total: {currency}{calculateTotal().toFixed(2)}</p>
-              <p className="text-gray-700 mt-4">Estimated Delivery Date: TBD</p>
+              <p className="text-gray-700 mt-4">Estimated Delivery Date: {getEstimatedDeliveryDate()}</p>
               <input type="text" placeholder="Coupon/Promo Code" className="mt-2 p-2 border rounded w-full" />
               <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-full">Apply Coupon</button>
               <div className="mt-4">
                 <p className="text-gray-700">Accepted Payment Methods:</p>
                 <div className="flex gap-2">
-                  <img src={assets.razorpay} alt="razorpay" className="h-8" />
-                  <img src={assets.gpay} alt="gpay" className="h-8" />
-                  <img src={assets.mastercard} alt="mastercard" className="h-8" />
+                  <img src={assets.razorpay} alt="Razorpay" className="h-8" />
+                  <img src={assets.gpay} alt="GPay" className="h-8" />
+                  <img src={assets.mastercard} alt="Mastercard" className="h-8" />
                 </div>
               </div>
               <Link to="/checkout" className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 w-full text-center block">Proceed to Checkout</Link>
