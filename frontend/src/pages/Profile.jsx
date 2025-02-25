@@ -1,3 +1,4 @@
+// Frontend/src/pages/Profile.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -21,8 +22,9 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:4000/api/user/profile', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setFormData({
           name: response.data.name,
@@ -71,9 +73,10 @@ const Profile = () => {
         formDataToSend.append('profilePicture', formData.profilePicture);
       }
 
+      const token = localStorage.getItem('token');
       const response = await axios.put('http://localhost:4000/api/user/profile', formDataToSend, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });

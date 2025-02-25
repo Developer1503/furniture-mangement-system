@@ -1,3 +1,4 @@
+// Frontend/src/pages/AdminDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +14,11 @@ const AdminDashboard = () => {
     description: '',
     price: '',
     category: '',
-    image: null,
+    bestseller: false,
+    image1: null,
+    image2: null,
+    image3: null,
+    image4: null,
   });
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,20 +27,22 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem('token');
         const usersResponse = await axios.get('http://localhost:4000/api/admin/users', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         const ordersResponse = await axios.get('http://localhost:4000/api/admin/orders', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         const productsResponse = await axios.get('http://localhost:4000/api/admin/products', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(usersResponse.data);
         setOrders(ordersResponse.data);
         setProducts(productsResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setMessage('Error fetching data. Please check your credentials.');
       }
     };
 
@@ -48,8 +55,9 @@ const AdminDashboard = () => {
 
   const confirmDeleteUser = async () => {
     try {
+      const token = localStorage.getItem('token');
       await axios.delete(`http://localhost:4000/api/admin/users/${confirmDelete}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(users.filter(user => user._id !== confirmDelete));
       setConfirmDelete(null);
@@ -60,8 +68,9 @@ const AdminDashboard = () => {
 
   const handleUpdateOrderStatus = async (orderId, status) => {
     try {
+      const token = localStorage.getItem('token');
       await axios.put(`http://localhost:4000/api/admin/orders/${orderId}`, { status }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setOrders(orders.map(order => order._id === orderId ? { ...order, status } : order));
     } catch (error) {
@@ -75,8 +84,9 @@ const AdminDashboard = () => {
 
   const confirmDeleteProduct = async () => {
     try {
+      const token = localStorage.getItem('token');
       await axios.delete(`http://localhost:4000/api/admin/products/${confirmDelete}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(products.filter(product => product._id !== confirmDelete));
       setConfirmDelete(null);
@@ -95,19 +105,24 @@ const AdminDashboard = () => {
       formData.append('description', newProduct.description);
       formData.append('price', newProduct.price);
       formData.append('category', newProduct.category);
-      formData.append('image', newProduct.image);
+      formData.append('bestseller', newProduct.bestseller);
+      if (newProduct.image1) formData.append('image1', newProduct.image1);
+      if (newProduct.image2) formData.append('image2', newProduct.image2);
+      if (newProduct.image3) formData.append('image3', newProduct.image3);
+      if (newProduct.image4) formData.append('image4', newProduct.image4);
 
+      const token = localStorage.getItem('token');
       const response = await axios.post('http://localhost:4000/api/admin/products', formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
       setProducts([...products, response.data]);
-      setNewProduct({ name: '', description: '', price: '', category: '', image: null });
+      setNewProduct({ name: '', description: '', price: '', category: '', bestseller: false, image1: null, image2: null, image3: null, image4: null });
       setMessage('Product added successfully');
     } catch (error) {
-      setMessage('Error adding product');
+      setMessage('Error adding product: ' + error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
     }
@@ -121,11 +136,11 @@ const AdminDashboard = () => {
     }));
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e, imageKey) => {
     const file = e.target.files[0];
     setNewProduct((prevData) => ({
       ...prevData,
-      image: file,
+      [imageKey]: file,
     }));
   };
 
@@ -279,13 +294,40 @@ const AdminDashboard = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-2">Image</label>
+              <label className="block mb-2">Bestseller</label>
+              <input
+                type="checkbox"
+                name="bestseller"
+                checked={newProduct.bestseller}
+                onChange={(e) => setNewProduct({ ...newProduct, bestseller: e.target.checked })}
+                className="mr-2"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2">Images</label>
               <input
                 type="file"
-                name="image"
-                onChange={handleFileChange}
+                name="image1"
+                onChange={(e) => handleFileChange(e, 'image1')}
+                className="w-full p-2 border rounded bg-gray-100 mb-2"
+              />
+              <input
+                type="file"
+                name="image2"
+                onChange={(e) => handleFileChange(e, 'image2')}
+                className="w-full p-2 border rounded bg-gray-100 mb-2"
+              />
+              <input
+                type="file"
+                name="image3"
+                onChange={(e) => handleFileChange(e, 'image3')}
+                className="w-full p-2 border rounded bg-gray-100 mb-2"
+              />
+              <input
+                type="file"
+                name="image4"
+                onChange={(e) => handleFileChange(e, 'image4')}
                 className="w-full p-2 border rounded bg-gray-100"
-                required
               />
             </div>
             <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" disabled={loading}>
@@ -314,7 +356,7 @@ const AdminDashboard = () => {
                   <td className="py-2 px-4 border-b">${product.price}</td>
                   <td className="py-2 px-4 border-b">{product.category}</td>
                   <td className="py-2 px-4 border-b">
-                    <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded" />
+                    <img src={product.image[0]} alt={product.name} className="w-16 h-16 object-cover rounded" />
                   </td>
                   <td className="py-2 px-4 border-b text-center">
                     <button onClick={() => handleDeleteProduct(product._id)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700">
