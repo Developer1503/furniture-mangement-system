@@ -118,10 +118,12 @@ const AdminDashboard = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setProducts([...products, response.data]);
+      console.log('Product added:', response.data.product);
+      setProducts([...products, response.data.product]);
       setNewProduct({ name: '', description: '', price: '', category: '', bestseller: false, image1: null, image2: null, image3: null, image4: null });
       setMessage('Product added successfully');
     } catch (error) {
+      console.error('Error adding product:', error);
       setMessage('Error adding product: ' + error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
