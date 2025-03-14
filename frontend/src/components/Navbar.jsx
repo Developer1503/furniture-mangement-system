@@ -71,11 +71,13 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-white shadow-md p-4 flex justify-between items-center relative z-50">
+    <nav className="bg-transparent shadow-md p-4 flex justify-between items-center relative z-50">
+      {/* Logo */}
       <Link to="/" className="flex items-center">
         <img src={assets.Antro_transparent} alt="Antro Logo" className="h-6" />
       </Link>
 
+      {/* Desktop Menu */}
       <div className="hidden md:flex space-x-4">
         <Link to="/" className="text-black hover:text-blue-500 font-bold">HOME</Link>
         <div className="relative" ref={dropdownRef}>
@@ -109,6 +111,7 @@ const Navbar = () => {
         </Link>
       </div>
 
+      {/* Icons and Mobile Menu Button */}
       <div className="flex space-x-4 items-center">
         {token ? (
           <img src={assets.user} alt="User Icon" className="w-6 cursor-pointer" onClick={handleProfileClick} />
@@ -129,8 +132,9 @@ const Navbar = () => {
         <button onClick={toggleMobileMenu} className="md:hidden text-2xl">&#9776;</button>
       </div>
 
+      {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-md p-4 space-y-4 z-50">
+        <div className="md:hidden absolute top-full left-0 w-full bg-yellow-200 shadow-md p-4 space-y-4 z-50">
           <Link to="/" className="block text-black hover:text-blue-500 font-bold">HOME</Link>
           <button onClick={toggleDropdown} className="text-black hover:text-blue-500 font-bold">CATEGORIES</button>
           {isDropdownVisible && (
