@@ -1,7 +1,7 @@
-// Frontend/src/pages/AdminDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -118,7 +118,6 @@ const AdminDashboard = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Product added:', response.data.product);
       setProducts([...products, response.data.product]);
       setNewProduct({ name: '', description: '', price: '', category: '', bestseller: false, image1: null, image2: null, image3: null, image4: null });
       setMessage('Product added successfully');
@@ -148,9 +147,60 @@ const AdminDashboard = () => {
 
   const filteredOrders = orders.filter(order => filterStatus === 'all' || order.status === filterStatus);
 
+  // Data for charts
+  const orderStatusData = [
+    { name: 'Pending', value: orders.filter(order => order.status === 'pending').length },
+    { name: 'Shipped', value: orders.filter(order => order.status === 'shipped').length },
+    { name: 'Delivered', value: orders.filter(order => order.status === 'delivered').length },
+  ];
+
+  const productCategoryData = products.reduce((acc, product) => {
+    const category = product.category;
+    acc[category] = (acc[category] || 0) + 1;
+    return acc;
+  }, {});
+
+  const productChartData = Object.keys(productCategoryData).map(key => ({
+    name: key,
+    value: productCategoryData[key],
+  }));
+
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+
+      {/* Summary Charts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold mb-4">Order Status</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie data={orderStatusData} cx="50%" cy="50%" labelLine={false} label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`} outerRadius={80} fill="#8884d8" dataKey="value">
+                {orderStatusData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold mb-4">Product Categories</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={productChartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="value" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
 
       {/* Users Section */}
       <div className="mb-8 p-4 bg-white rounded-lg shadow-md">
@@ -379,7 +429,7 @@ const AdminDashboard = () => {
             <p className="mb-4">Are you sure you want to delete this item?</p>
             <div className="flex justify-end">
               <button onClick={() => setConfirmDelete(null)} className="mr-2 text-gray-500 hover:text-gray-700">Cancel</button>
-              <button onClick={confirmDeleteUser} className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">Confirm</button>
+              <button onClick={confirmDeleteProduct} className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">Confirm</button>
             </div>
           </div>
         </div>
