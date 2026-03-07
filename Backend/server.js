@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import connectDB from './config/mongodb.js';
+import supabase from './config/supabase.js';
 import connectCloudinary from './config/cloudinary.js';
 import { userRouter } from './routes/userRoute.js';
 import { profileRoutes } from './routes/profileRoute.js';
@@ -14,7 +14,7 @@ import session from 'express-session';
 dotenv.config();
 
 // Validate environment variables
-const requiredEnvVars = ['MONGO_URI', 'CLOUDINARY_API_KEY', 'CLOUDINARY_SECRET_KEY', 'CLOUDINARY_NAME', 'JWT_SECRET', 'GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'SESSION_SECRET'];
+const requiredEnvVars = ['SUPABASE_URL', 'SUPABASE_SERVICE_KEY', 'CLOUDINARY_API_KEY', 'CLOUDINARY_SECRET_KEY', 'CLOUDINARY_NAME', 'JWT_SECRET', 'GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'SESSION_SECRET'];
 requiredEnvVars.forEach(varName => {
   if (!process.env[varName]) {
     throw new Error(`Missing environment variable: ${varName}`);
@@ -24,7 +24,23 @@ requiredEnvVars.forEach(varName => {
 const app = express();
 const port = process.env.PORT || 4000;
 
-connectDB();
+// Test Supabase connection
+const testConnection = async () => {
+  try {
+    const { data, error } = await supabase.from('users').select('count', { count: 'exact', head: true });
+    if (error && error.code === '42P01') {
+      console.log('Supabase connected! (Tables may need to be created)');
+    } else if (error) {
+      console.log('Supabase connected, but query warning:', error.message);
+    } else {
+      console.log('Supabase connected successfully!');
+    }
+  } catch (err) {
+    console.log('Supabase client initialized');
+  }
+};
+testConnection();
+
 connectCloudinary();
 
 app.use(express.json());

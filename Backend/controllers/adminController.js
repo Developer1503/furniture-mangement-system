@@ -27,7 +27,7 @@ export const deleteUser = async (req, res) => {
 
 export const getOrders = async (req, res) => {
   try {
-    const orders = await orderModel.find({}).populate('user', 'name email');
+    const orders = await orderModel.find({});
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching orders', error: error.message });
@@ -49,8 +49,7 @@ export const updateOrderStatus = async (req, res) => {
 
 export const addProduct = async (req, res) => {
   try {
-    const product = new productModel(req.body);
-    await product.save();
+    await productModel.create(req.body);
     res.json({ message: 'Product added successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error adding product', error: error.message });

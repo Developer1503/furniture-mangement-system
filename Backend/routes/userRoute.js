@@ -2,6 +2,7 @@
 import express from 'express';
 import { loginUser, registerUser, adminLogin } from '../controllers/userController.js';
 import { protect, authorize } from '../middleware/authMiddleware.js';
+import userModel from '../models/userModel.js';
 import passport from 'passport';
 
 const userRouter = express.Router();
@@ -25,7 +26,7 @@ userRouter.get('/admin/profile', protect, authorize(['admin']), (req, res) => {
 userRouter.put('/admin/users/:userId/role', protect, authorize(['admin']), async (req, res) => {
   const { role } = req.body;
   try {
-    const user = await UserModel.findByIdAndUpdate(req.params.userId, { role }, { new: true });
+    const user = await userModel.findByIdAndUpdate(req.params.userId, { role }, { new: true });
     if (user) {
       res.status(200).json({ message: 'User role updated successfully', user });
     } else {

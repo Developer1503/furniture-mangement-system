@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import UserModel from './models/userModel.js';
+import userModel from './models/userModel.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,16 +14,16 @@ passport.use(new GoogleStrategy({
   callbackURL: 'http://localhost:5173/api/auth/google/callback',
 }, async (accessToken, refreshToken, profile, done) => {
   try {
-    let user = await UserModel.findOne({ googleId: profile.id });
+    let user = await userModel.findOne({ googleId: profile.id });
     if (!user) {
-      user = new UserModel({
+      user = await userModel.create({
         googleId: profile.id,
         name: profile.displayName,
         email: profile.emails[0].value,
         profilePicture: profile.photos[0].value,
+        password: 'google-oauth-' + Date.now(), // placeholder password for OAuth users
         role: 'customer',
       });
-      await user.save();
     }
     return done(null, user);
   } catch (error) {
@@ -37,7 +37,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await UserModel.findById(id);
+    const user = await userModel.findById(id);
     done(null, user);
   } catch (error) {
     done(error);

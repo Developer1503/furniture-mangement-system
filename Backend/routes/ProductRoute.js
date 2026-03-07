@@ -1,6 +1,7 @@
 import express from 'express';
 import productModel from '../models/productModel.js';
 import upload from '../middleware/multer.js';
+import { v2 as cloudinary } from 'cloudinary';
 
 const productRouter = express.Router();
 
@@ -31,8 +32,7 @@ productRouter.post('/add', upload.fields([{ name: 'image1', maxCount: 1 }, { nam
       date: Date.now(),
     };
 
-    const product = new productModel(productData);
-    await product.save();
+    await productModel.create(productData);
 
     res.json({ success: true, message: 'Product added' });
   } catch (error) {
@@ -80,12 +80,7 @@ productRouter.post('/single', async (req, res) => {
 productRouter.get('/search', async (req, res) => {
   const { query } = req.query;
   try {
-    const results = await productModel.find({
-      $or: [
-        { name: { $regex: query, $options: 'i' } },
-        { description: { $regex: query, $options: 'i' } },
-      ],
-    });
+    const results = await productModel.search(query);
     res.json(results);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching search results', error: error.message });

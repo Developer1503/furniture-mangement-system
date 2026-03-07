@@ -27,17 +27,15 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ msg: "Username already exists" });
     }
 
-    const user = new userModel({
+    const user = await userModel.create({
       name,
       email,
       password,
       phone,
       profilePicture,
       username,
-      role: role || UserRoles.CUSTOMER, // Default role to 'customer' if not provided
+      role: role || UserRoles.CUSTOMER,
     });
-
-    await user.save();
 
     res.status(201).json({ msg: "User registered successfully" });
   } catch (error) {
@@ -51,16 +49,16 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await userModel.findOne({ email }).select('+password');
+    const user = await userModel.findOne({ email });
     if (user && (await user.matchPassword(password))) {
-      user.lastLogin = new Date();
-      await user.save();
-      const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      await userModel.findByIdAndUpdate(user.id, { lastLogin: new Date().toISOString() });
+      const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
       res.json({ token, user: { name: user.name, email: user.email, role: user.role } });
     } else {
       res.status(401).json({ msg: "Invalid email or password" });
     }
   } catch (error) {
+    console.error("Error logging in:", error);
     res.status(500).json({ msg: "Error logging in" });
   }
 };
@@ -70,14 +68,15 @@ const adminLogin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await userModel.findOne({ email }).select('+password');
+    const user = await userModel.findOne({ email });
     if (user && (await user.matchPassword(password)) && user.role === UserRoles.ADMIN) {
-      const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
       res.json({ token, user: { name: user.name, email: user.email, role: user.role } });
     } else {
       res.status(401).json({ msg: "Invalid email or password" });
     }
   } catch (error) {
+    console.error("Error logging in:", error);
     res.status(500).json({ msg: "Error logging in" });
   }
 };

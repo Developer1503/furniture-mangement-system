@@ -29,8 +29,7 @@ export const addProduct = async (req, res) => {
       date: Date.now(),
     };
 
-    const product = new productModel(productData);
-    await product.save();
+    await productModel.create(productData);
 
     res.json({ success: true, message: 'Product added' });
   } catch (error) {
