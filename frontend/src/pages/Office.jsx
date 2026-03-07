@@ -3,10 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 
 const Office = () => {
-  useEffect(() => {
-    console.log('Office component rendered');
-  }, []);
-
   const { products } = useContext(ShopContext);
 
   // Filter products for the Office category
@@ -17,6 +13,10 @@ const Office = () => {
   const [sortConfig, setSortConfig] = useState({ key: 'price', direction: 'ascending' });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setSortedProducts(officeProducts);
+  }, [products]);
 
   // Sorting functions
   const sortProducts = (key, direction) => {
@@ -36,39 +36,45 @@ const Office = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Roboto, sans-serif' }}>
-        Office Furniture
-      </h1>
-      <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
-        <select
-          onChange={(e) => sortProducts(e.target.value.split('-')[0], e.target.value.split('-')[1])}
-          style={{ padding: '0.5rem 1rem', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}
-        >
-          <option value="price-ascending">Sort by Price (Asc)</option>
-          <option value="price-descending">Sort by Price (Desc)</option>
-          <option value="date-ascending">Sort by Date (Asc)</option>
-          <option value="date-descending">Sort by Date (Desc)</option>
-          <option value="bestseller-ascending">Show Bestsellers</option>
-        </select>
+    <div className="category-page">
+      <div className="category-page__header">
+        <h1 className="category-page__title">Office Furniture</h1>
+        <div className="category-page__accent" />
+        <div className="category-page__controls">
+          <span className="category-page__sort-label">Sort by</span>
+          <select
+            className="category-page__sort-select"
+            onChange={(e) => sortProducts(e.target.value.split('-')[0], e.target.value.split('-')[1])}
+          >
+            <option value="price-ascending">Price (Low to High)</option>
+            <option value="price-descending">Price (High to Low)</option>
+            <option value="date-ascending">Date (Oldest)</option>
+            <option value="date-descending">Date (Newest)</option>
+            <option value="bestseller-ascending">Bestsellers</option>
+          </select>
+        </div>
       </div>
+
       <div className="grid-container">
-        {sortedProducts.map(product => (
+        {sortedProducts.map((product, index) => (
           <div
             key={product._id}
             className="grid-item"
             onClick={() => handleProductClick(product)}
-            style={{ cursor: 'pointer' }}
+            style={{ animationDelay: `${index * 0.06}s` }}
           >
-            <img
-              src={product.image[0]}
-              alt={product.name}
-              className="product-image"
-            />
-            <div style={{ padding: '1rem' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>{product.name}</h2>
-              <p style={{ color: '#6B7280' }}>{product.description}</p>
-              <p style={{ color: '#111827', fontWeight: 'bold' }}>${product.price}</p>
+            <div className="grid-item__image-wrapper">
+              <img
+                src={product.image[0]}
+                alt={product.name}
+                className="product-image"
+              />
+              <span className="grid-item__quick-view">View Details</span>
+            </div>
+            <div className="grid-item__content">
+              <h2 className="grid-item__name">{product.name}</h2>
+              <p className="grid-item__description">{product.description}</p>
+              <p className="grid-item__price">${product.price}</p>
             </div>
           </div>
         ))}

@@ -1,7 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 /* Apply the Google Font to the body */
 html {
@@ -9,40 +9,248 @@ html {
 }
 
 body {
-  font-family: 'Inter', 'Roboto', sans-serif;
+  font-family: 'Outfit', 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #faf8f4;
+  color: #1a1a1a;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+/* ================ Category Page Styles ================ */
+.category-page {
+  padding: 40px 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 80vh;
 }
 
+.category-page__header {
+  margin-bottom: 40px;
+}
+
+.category-page__title {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.03em;
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+.category-page__accent {
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #C9A84C, #8B6914);
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+
+.category-page__controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.category-page__sort-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.category-page__sort-select {
+  padding: 10px 40px 10px 16px;
+  background: #ffffff;
+  color: #1a1a1a;
+  border: 1.5px solid #e5e1d8;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: 'Outfit', sans-serif;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  transition: all 0.25s ease;
+}
+
+.category-page__sort-select:hover {
+  border-color: #C9A84C;
+  box-shadow: 0 2px 8px rgba(201, 168, 76, 0.12);
+}
+
+.category-page__sort-select:focus {
+  outline: none;
+  border-color: #C9A84C;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+}
+
+/* ================ Product Grid ================ */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+}
+
+@media (max-width: 680px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* ================ Category Grid Item (Card) ================ */
 .grid-item {
-  border-radius: 0.5rem;
+  position: relative;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
 }
 
 .grid-item:hover {
-  transform: scale(1.05);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.product-image {
-  width: 100%;
-  height: 200px; /* Adjust the height as needed */
-  object-fit: cover; /* Ensure the image covers the container without distortion */
+.grid-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #C9A84C, #8B6914, #C9A84C);
+  transform: scaleX(0);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: left;
 }
-/* Add this CSS to your stylesheet */
+
+.grid-item:hover::after {
+  transform: scaleX(1);
+}
+
+/* Image inside grid item */
+.grid-item .product-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: block;
+}
+
+.grid-item:hover .product-image {
+  transform: scale(1.08);
+}
+
+/* Image wrapper for overlay */
+.grid-item__image-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: #f5f0e8;
+}
+
+.grid-item__image-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.08), transparent);
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.grid-item:hover .grid-item__image-wrapper::after {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent);
+}
+
+/* Quick View badge on hover */
+.grid-item__quick-view {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #2d2a26;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.grid-item:hover .grid-item__quick-view {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Content area */
+.grid-item__content {
+  padding: 20px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.grid-item__name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grid-item__description {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin: 0;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.grid-item__price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #8B6914;
+  margin: 4px 0 0;
+  letter-spacing: -0.02em;
+}
+
+/* ================ Responsive ================ */
 @media (max-width: 600px) {
   .hide-on-small {
     display: none;
+  }
+
+  .category-page {
+    padding: 24px 4%;
   }
 }
