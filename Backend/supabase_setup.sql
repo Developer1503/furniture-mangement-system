@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL,
+  password TEXT DEFAULT 'managed-by-supabase-auth',
   phone TEXT,
   profile_picture TEXT,
   username TEXT UNIQUE,
@@ -61,18 +61,26 @@ CREATE INDEX IF NOT EXISTS idx_products_name ON products(name);
 CREATE INDEX IF NOT EXISTS idx_orders_user_id ON orders(user_id);
 
 -- ============================================
--- ENABLE Row Level Security (optional, recommended)
+-- ROW LEVEL SECURITY (RLS) POLICIES
+-- These allow the frontend (anon key) to access data
 -- ============================================
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 
--- Allow service role full access (your backend uses service key)
-CREATE POLICY "Service role has full access to users" ON users
-  FOR ALL USING (true) WITH CHECK (true);
+-- USERS: Allow authenticated users to read/update their own profile
+CREATE POLICY "Users can view all users" ON users FOR SELECT USING (true);
+CREATE POLICY "Users can insert their own profile" ON users FOR INSERT WITH CHECK (true);
+CREATE POLICY "Users can update their own profile" ON users FOR UPDATE USING (true);
+CREATE POLICY "Admins can delete users" ON users FOR DELETE USING (true);
 
-CREATE POLICY "Service role has full access to products" ON products
-  FOR ALL USING (true) WITH CHECK (true);
+-- PRODUCTS: Everyone can read, authenticated can insert/update/delete
+CREATE POLICY "Anyone can view products" ON products FOR SELECT USING (true);
+CREATE POLICY "Authenticated can insert products" ON products FOR INSERT WITH CHECK (true);
+CREATE POLICY "Authenticated can update products" ON products FOR UPDATE USING (true);
+CREATE POLICY "Authenticated can delete products" ON products FOR DELETE USING (true);
 
-CREATE POLICY "Service role has full access to orders" ON orders
-  FOR ALL USING (true) WITH CHECK (true);
+-- ORDERS: Users can manage their own orders
+CREATE POLICY "Users can view orders" ON orders FOR SELECT USING (true);
+CREATE POLICY "Users can insert orders" ON orders FOR INSERT WITH CHECK (true);
+CREATE POLICY "Users can update orders" ON orders FOR UPDATE USING (true);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -109,9 +109,34 @@ const AddProduct = () => {
     setIsSubmitting(true);
 
     try {
-      await axios.post('http://localhost:4000/api/admin/products', product, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      // Upload images to Supabase Storage if available
+      let imageUrls = [];
+      for (const file of product.image) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `products/${Date.now()}_${Math.random().toString(36).slice(2)}.${fileExt}`;
+        const { data, error } = await supabase.storage
+          .from('product-images')
+          .upload(fileName, file);
+
+        if (!error) {
+          const { data: { publicUrl } } = supabase.storage
+            .from('product-images')
+            .getPublicUrl(fileName);
+          imageUrls.push(publicUrl);
+        }
+      }
+
+      const { error } = await supabase.from('products').insert([{
+        name: product.name,
+        description: product.description,
+        price: Number(product.price),
+        category: product.category,
+        bestseller: product.bestseller,
+        image: imageUrls.length > 0 ? imageUrls : [],
+        date: new Date().toISOString(),
+      }]);
+
+      if (error) throw error;
 
       setShowSuccess(true);
       setTimeout(() => {
@@ -224,8 +249,8 @@ const AddProduct = () => {
                   type="button"
                   onClick={() => setProduct({ ...product, category: cat.name })}
                   className={`p-4 rounded-xl border-2 transition-all duration-300 transform hover:scale-105 ${product.category === cat.name
-                      ? `bg-gradient-to-r ${cat.color} text-white border-transparent shadow-lg`
-                      : 'bg-white border-gray-200 hover:border-gray-300'
+                    ? `bg-gradient-to-r ${cat.color} text-white border-transparent shadow-lg`
+                    : 'bg-white border-gray-200 hover:border-gray-300'
                     }`}
                 >
                   <div className="text-3xl mb-1">{cat.icon}</div>
@@ -266,8 +291,8 @@ const AddProduct = () => {
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               className={`border-3 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${isDragging
-                  ? 'border-blue-500 bg-blue-50 scale-105'
-                  : 'border-gray-300 bg-gray-50 hover:border-gray-400'
+                ? 'border-blue-500 bg-blue-50 scale-105'
+                : 'border-gray-300 bg-gray-50 hover:border-gray-400'
                 }`}
             >
               <input
@@ -320,8 +345,8 @@ const AddProduct = () => {
             type="submit"
             disabled={isSubmitting || Object.keys(errors).length > 0}
             className={`w-full py-4 px-6 rounded-xl font-bold text-lg text-white transition-all duration-300 transform hover:scale-105 ${isSubmitting || Object.keys(errors).length > 0
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl'
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl'
               }`}
           >
             {isSubmitting ? (

@@ -1,8 +1,8 @@
 // Frontend/src/pages/Profile.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaCamera, FaSave, FaEdit } from 'react-icons/fa';
+import { supabase } from '../lib/supabase';
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -22,19 +22,45 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:4000/api/user/profile', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setFormData({
-          name: response.data.name,
-          email: response.data.email,
-          phone: response.data.phone || '',
-          location: response.data.location || '',
-          language: response.data.language || '',
-        });
-        setPreviewImage(response.data.profilePicture || null);
+        // Get current auth user
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+
+        if (!authUser) {
+          // Fallback to localStorage
+          const storedUser = JSON.parse(localStorage.getItem('user'));
+          if (storedUser) {
+            setFormData({
+              name: storedUser.name || '',
+              email: storedUser.email || '',
+              phone: '',
+              location: '',
+              language: '',
+            });
+          }
+          return;
+        }
+
+        // Fetch from users table
+        const { data: userData, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', authUser.id)
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (userData) {
+          setFormData({
+            name: userData.name || '',
+            email: userData.email || '',
+            phone: userData.phone || '',
+            location: userData.location || '',
+            language: userData.language || '',
+          });
+          setPreviewImage(userData.profile_picture || null);
+        }
       } catch (error) {
+        console.error('Error fetching profile:', error);
         setMessage('Error fetching profile');
       }
     };
@@ -50,48 +76,88 @@ const Profile = () => {
     }));
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    setFormData((prevData) => ({
-      ...prevData,
-      profilePicture: file,
-    }));
+    if (!file) return;
+
     setPreviewImage(URL.createObjectURL(file));
+
+    try {
+      // Upload to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const { data, error } = await supabase.storage
+        .from('profile-pictures')
+        .upload(fileName, file);
+
+      if (error) {
+        console.warn('Storage upload warning:', error.message);
+        // Still set local preview even if storage fails
+        return;
+      }
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('profile-pictures')
+        .getPublicUrl(fileName);
+
+      setFormData((prevData) => ({
+        ...prevData,
+        profilePicture: publicUrl,
+      }));
+    } catch (error) {
+      console.error('Upload error:', error);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('phone', formData.phone);
-      formDataToSend.append('location', formData.location);
-      formDataToSend.append('language', formData.language);
-      if (formData.profilePicture) {
-        formDataToSend.append('profilePicture', formData.profilePicture);
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+
+      if (!authUser) {
+        setMessage('Not authenticated');
+        return;
       }
 
-      const token = localStorage.getItem('token');
-      const response = await axios.put('http://localhost:4000/api/user/profile', formDataToSend, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      setMessage(response.data.msg);
-      setPreviewImage(response.data.user.profilePicture);
+      const updateData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        location: formData.location,
+        language: formData.language,
+      };
+
+      if (formData.profilePicture) {
+        updateData.profile_picture = formData.profilePicture;
+      }
+
+      const { error } = await supabase
+        .from('users')
+        .update(updateData)
+        .eq('id', authUser.id);
+
+      if (error) throw error;
+
+      // Update localStorage
+      const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+      localStorage.setItem('user', JSON.stringify({ ...storedUser, name: formData.name, email: formData.email }));
+
+      setMessage('Profile updated successfully');
       setIsEditing(false);
     } catch (error) {
+      console.error('Error updating profile:', error);
       setMessage('Error updating profile');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     navigate('/auth');
   };
 
@@ -100,7 +166,7 @@ const Profile = () => {
       <div className="w-full md:w-1/3 flex flex-col items-center mb-4 md:mb-0">
         <div className="relative w-32 h-32">
           <img
-            src={previewImage}
+            src={previewImage || 'https://via.placeholder.com/128'}
             alt="Profile"
             className="w-full h-full object-cover rounded-full border-4 border-gray-300"
           />
@@ -120,7 +186,7 @@ const Profile = () => {
           Profile
           <FaEdit className="text-blue-500 cursor-pointer" onClick={() => setIsEditing(true)} />
         </h1>
-        {message && <p className="text-red-500 mb-4">{message}</p>}
+        {message && <p className={`mb-4 ${message.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4 flex items-center">
             <label className="w-1/4 text-right pr-4">Name</label>
