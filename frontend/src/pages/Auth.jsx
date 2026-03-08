@@ -204,6 +204,31 @@ const GoogleIcon = () => (
   </svg>
 );
 
+/* ─── Field input (MUST be at module scope, NOT inside Auth) ── */
+/* Defining it inside Auth causes remount on every render → lost focus */
+const Field = ({ label, name, type = 'text', placeholder, required = false, formData, errors, handleChange }) => (
+  <div style={S.inputGroup}>
+    <label style={S.label}>{label}</label>
+    <input
+      id={`auth-${name}`}
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      value={formData[name]}
+      onChange={handleChange}
+      required={required}
+      autoComplete={type === 'password' ? 'current-password' : 'on'}
+      style={{
+        ...S.input,
+        ...(errors[name] ? S.inputError : {}),
+      }}
+      onFocus={e => (e.target.style.borderColor = '#C9A84C')}
+      onBlur={e => (e.target.style.borderColor = errors[name] ? 'rgba(239,68,68,0.6)' : 'rgba(255,255,255,0.1)')}
+    />
+    {errors[name] && <p style={S.errorText}>{errors[name]}</p>}
+  </div>
+);
+
 /* ─── Component ─────────────────────────────────────────────── */
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -374,30 +399,6 @@ const Auth = () => {
     setRole('customer');
   };
 
-  /* ── Input helper ───────────────────────────────────────── */
-  const Field = ({ label, name, type = 'text', placeholder, required = false }) => (
-    <div style={S.inputGroup}>
-      <label style={S.label}>{label}</label>
-      <input
-        id={`auth-${name}`}
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        value={formData[name]}
-        onChange={handleChange}
-        required={required}
-        autoComplete={type === 'password' ? 'current-password' : 'on'}
-        style={{
-          ...S.input,
-          ...(errors[name] ? S.inputError : {}),
-        }}
-        onFocus={e => (e.target.style.borderColor = '#C9A84C')}
-        onBlur={e => (e.target.style.borderColor = errors[name] ? 'rgba(239,68,68,0.6)' : 'rgba(255,255,255,0.1)')}
-      />
-      {errors[name] && <p style={S.errorText}>{errors[name]}</p>}
-    </div>
-  );
-
   return (
     <div style={S.page}>
       <div style={S.card}>
@@ -440,14 +441,14 @@ const Auth = () => {
         <form onSubmit={handleSubmit} noValidate>
           {isSignUp && (
             <>
-              <Field label="Full Name" name="name" placeholder="John Doe" required />
-              <Field label="Username" name="username" placeholder="johndoe" />
-              <Field label="Phone Number" name="phone" placeholder="+91 98765 43210" />
+              <Field label="Full Name" name="name" placeholder="John Doe" required formData={formData} errors={errors} handleChange={handleChange} />
+              <Field label="Username" name="username" placeholder="johndoe" formData={formData} errors={errors} handleChange={handleChange} />
+              <Field label="Phone Number" name="phone" placeholder="+91 98765 43210" formData={formData} errors={errors} handleChange={handleChange} />
             </>
           )}
 
-          <Field label="Email" name="email" type="email" placeholder="you@example.com" required />
-          <Field label="Password" name="password" type="password" placeholder="••••••••" required />
+          <Field label="Email" name="email" type="email" placeholder="you@example.com" required formData={formData} errors={errors} handleChange={handleChange} />
+          <Field label="Password" name="password" type="password" placeholder="••••••••" required formData={formData} errors={errors} handleChange={handleChange} />
 
           {/* Toggle link */}
           <div style={{ textAlign: 'right', marginBottom: '4px' }}>
