@@ -183,10 +183,10 @@ const Navbar = () => {
     <nav
       className={`sticky top-0 z-50 transition-all duration-500 ${isScrolled
         ? 'bg-white/95 backdrop-blur-md shadow-lg'
-        : 'bg-white shadow-sm'
+        : 'bg-[#fdf5cf]'
         }`}
       style={{
-        borderBottom: isScrolled ? '1px solid rgba(214, 200, 181, 0.3)' : '1px solid rgba(0, 0, 0, 0.05)'
+        borderBottom: isScrolled ? '1px solid rgba(214, 200, 181, 0.3)' : 'none'
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

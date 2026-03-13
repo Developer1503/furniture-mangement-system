@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { 
-  Eye, Save, Trash2, Wand2, Download, Heart, Share2, Sparkles, Camera, 
-  Palette, Home, Lightbulb, Star, Settings, Filter, Grid, List, 
+import React, { useState, useEffect } from "react";
+import {
+  Eye, Save, Trash2, Wand2, Download, Heart, Share2, Sparkles, Camera,
+  Palette, Home, Lightbulb, Star, Settings, Filter, Grid, List,
   Search, Bell, User, ChevronDown, Upload, BookOpen, Award, TrendingUp
 } from "lucide-react";
+import { InferenceClient } from "@huggingface/inference";
+
+const client = new InferenceClient(import.meta.env.VITE_HF_TOKEN);
 
 const Ai_gen = () => {
   const [query, setQuery] = useState("");
@@ -14,6 +17,15 @@ const Ai_gen = () => {
   const [likedDesigns, setLikedDesigns] = useState([]);
   const [viewMode, setViewMode] = useState('grid');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [style, setStyle] = useState("Contemporary");
+  const [quality, setQuality] = useState("High (2K)");
+  const [variations, setVariations] = useState("3 Variations");
+
+  useEffect(() => {
+    return () => {
+      designs.forEach(design => URL.revokeObjectURL(design.url));
+    };
+  }, [designs]);
 
   const categories = [
     { id: 'all', name: 'All Designs', count: '2.4k+' },
@@ -44,58 +56,53 @@ const Ai_gen = () => {
       setError("Please provide a detailed description of your design requirements");
       return;
     }
-    
+
+    if (!import.meta.env.VITE_HF_TOKEN) {
+      setError("Hugging Face Token is missing. Please add VITE_HF_TOKEN to your .env file.");
+      return;
+    }
+
     setIsLoading(true);
     setError("");
-    
+
     try {
-      setTimeout(() => {
-        const newDesigns = [
-          {
-            id: Date.now() + 1,
-            url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop",
-            title: "Executive Living Suite",
-            style: "Contemporary Luxury",
-            description: "Sophisticated blend of comfort and professional elegance",
-            colors: ["#1a1a2e", "#16213e", "#e94560", "#f5f5f5"],
-            rating: 4.9,
-            category: "living",
-            designer: "AI Studio Pro",
-            renderTime: "2.3s",
-            confidence: 96
+      const numVar = parseInt(variations.split(' ')[0]) || 3;
+      const newDesigns = [];
+      const promptText = `${query}, ${style} style, photorealistic, interior design, high quality, ${quality}`;
+
+      for (let i = 0; i < numVar; i++) {
+        const imageBlob = await client.textToImage({
+          provider: "fal-ai",
+          model: "stabilityai/stable-diffusion-3.5-large",
+          inputs: promptText,
+          parameters: {
+            seed: Math.floor(Math.random() * 1000000),
+            num_inference_steps: 4
           },
-          {
-            id: Date.now() + 2,
-            url: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=800&h=600&fit=crop",
-            title: "Modern Corporate Space",
-            style: "Minimalist Professional",
-            description: "Clean lines with premium materials and smart technology",
-            colors: ["#2c3e50", "#ecf0f1", "#3498db", "#e74c3c"],
-            rating: 4.8,
-            category: "office",
-            designer: "AI Studio Pro",
-            renderTime: "1.8s",
-            confidence: 94
-          },
-          {
-            id: Date.now() + 3,
-            url: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&h=600&fit=crop",
-            title: "Luxury Residential Design",
-            style: "Scandinavian Premium",
-            description: "Warmth meets sophistication in this premium interior",
-            colors: ["#f8f9fa", "#495057", "#28a745", "#ffc107"],
-            rating: 4.9,
-            category: "bedroom",
-            designer: "AI Studio Pro",
-            renderTime: "2.1s",
-            confidence: 98
-          }
-        ];
-        setDesigns(newDesigns);
-        setIsLoading(false);
-      }, 2500);
+        });
+
+        const imageUrl = URL.createObjectURL(imageBlob);
+
+        newDesigns.push({
+          id: Date.now() + i,
+          url: imageUrl,
+          title: `${style} Design Variation ${i + 1}`,
+          style: style,
+          description: query,
+          colors: ["#2c3e50", "#bdc3c7", "#ecf0f1", "#34495e"],
+          rating: (4.5 + Math.random() * 0.5).toFixed(1),
+          category: selectedCategory === 'all' ? 'living' : selectedCategory,
+          designer: "Hugging Face AI",
+          renderTime: "4.5s",
+          confidence: Math.floor(92 + Math.random() * 7)
+        });
+      }
+
+      setDesigns(newDesigns);
+      setIsLoading(false);
     } catch (err) {
-      setError("Unable to generate designs at this time. Please try again.");
+      console.error(err);
+      setError("Unable to generate designs using Hugging Face. Please check your API token or try again.");
       setIsLoading(false);
     }
   };
@@ -133,8 +140,8 @@ const Ai_gen = () => {
     }
   };
 
-  const filteredDesigns = selectedCategory === 'all' 
-    ? designs 
+  const filteredDesigns = selectedCategory === 'all'
+    ? designs
     : designs.filter(design => design.category === selectedCategory);
 
   return (
@@ -146,10 +153,10 @@ const Ai_gen = () => {
             Professional AI Interior Design Studio
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Transform commercial and residential spaces with enterprise-grade AI technology. 
+            Transform commercial and residential spaces with enterprise-grade AI technology.
             Generate photorealistic designs in seconds with professional accuracy.
           </p>
-          
+
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto mb-12">
             <div className="text-center">
@@ -178,7 +185,7 @@ const Ai_gen = () => {
               <Wand2 className="w-6 h-6 text-blue-600 mr-3" />
               <h2 className="text-2xl font-bold text-gray-900">Design Generator</h2>
             </div>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -192,11 +199,15 @@ const Ai_gen = () => {
                   rows="4"
                 />
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Style</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <select
+                    value={style}
+                    onChange={(e) => setStyle(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                  >
                     <option>Contemporary</option>
                     <option>Modern</option>
                     <option>Minimalist</option>
@@ -206,7 +217,11 @@ const Ai_gen = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Quality</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <select
+                    value={quality}
+                    onChange={(e) => setQuality(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                  >
                     <option>Ultra High (4K)</option>
                     <option>High (2K)</option>
                     <option>Standard (1080p)</option>
@@ -214,7 +229,11 @@ const Ai_gen = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Variations</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <select
+                    value={variations}
+                    onChange={(e) => setVariations(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                  >
                     <option>3 Variations</option>
                     <option>5 Variations</option>
                     <option>10 Variations</option>
@@ -301,7 +320,7 @@ const Ai_gen = () => {
                   Generated Designs ({filteredDesigns.length})
                 </h2>
                 <div className="flex items-center space-x-4">
-                  <select 
+                  <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                     className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
@@ -315,13 +334,13 @@ const Ai_gen = () => {
                 </div>
               </div>
               <div className="flex items-center space-x-2">
-                <button 
+                <button
                   onClick={() => setViewMode('grid')}
                   className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
                 >
                   <Grid className="w-5 h-5" />
                 </button>
-                <button 
+                <button
                   onClick={() => setViewMode('list')}
                   className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-blue-100 text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
                 >
@@ -329,7 +348,7 @@ const Ai_gen = () => {
                 </button>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
               {filteredDesigns.map((design) => (
                 <div key={design.id} className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -353,16 +372,15 @@ const Ai_gen = () => {
                     </div>
                     <button
                       onClick={() => handleLike(design)}
-                      className={`absolute bottom-4 right-4 p-3 rounded-full shadow-lg transition-all duration-200 ${
-                        likedDesigns.includes(design.id)
-                          ? 'bg-red-500 text-white'
-                          : 'bg-white text-gray-600 hover:bg-red-500 hover:text-white'
-                      }`}
+                      className={`absolute bottom-4 right-4 p-3 rounded-full shadow-lg transition-all duration-200 ${likedDesigns.includes(design.id)
+                        ? 'bg-red-500 text-white'
+                        : 'bg-white text-gray-600 hover:bg-red-500 hover:text-white'
+                        }`}
                     >
                       <Heart className="w-5 h-5" />
                     </button>
                   </div>
-                  
+
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-3">
                       <div>
@@ -373,9 +391,9 @@ const Ai_gen = () => {
                         {design.renderTime}
                       </span>
                     </div>
-                    
+
                     <p className="text-gray-600 text-sm mb-4">{design.description}</p>
-                    
+
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-2">
                         <Palette className="w-4 h-4 text-gray-400" />
@@ -394,7 +412,7 @@ const Ai_gen = () => {
                         by {design.designer}
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                       <div className="flex space-x-2">
                         <button

@@ -1,62 +1,85 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import ourpageImage from '../assets/ourpage.jpg'; // Import the image from the assets folder
+import { assets } from '../assets/assets';
 import { Link } from 'react-router-dom';
 
 const OurPage = () => {
   return (
-    <div className="flex min-h-screen bg-yellow-100 overflow-hidden mt-0">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[#fdf5cf] overflow-hidden w-full border-t border-[#e8dfb8]">
       {/* Left Section with Text */}
-      <div className="w-1/2 flex flex-col justify-center pl-24 pr-24">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 lg:px-20 xl:px-28 z-10 py-20 lg:py-0">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-6"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="flex flex-wrap items-center gap-4 mb-1"
         >
-          <div className="flex items-center gap-4">
-            <span className="text-base font-light tracking-wide">SINCE 1990</span>
-            <span className="text-6xl font-bold tracking-tight">DESIGN</span>
-          </div>
+          <span className="text-sm font-semibold tracking-widest text-[#1c1b18] uppercase">
+            SINCE 1990
+          </span>
+          <h2 className="text-[3.5rem] sm:text-6xl md:text-7xl xl:text-[5.5rem] font-bold text-[#1c1b18] tracking-tight leading-none">
+            DESIGN
+          </h2>
         </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
+
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-6xl font-bold tracking-tight leading-tight mb-6"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+          className="text-[3.5rem] sm:text-6xl md:text-7xl xl:text-[5.5rem] font-bold text-[#1c1b18] tracking-tight leading-none mb-1"
         >
           WITHIN
-          <br />
-          REACH
-        </motion.div>
-        <motion.p
-          initial={{ opacity: 0, y: 50 }}
+        </motion.h2>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-lg mb-8 font-light"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+          className="text-[3.5rem] sm:text-6xl md:text-7xl xl:text-[5.5rem] font-bold text-[#1c1b18] tracking-tight leading-none mb-8"
+        >
+          REACH
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+          className="text-lg md:text-xl text-stone-800 mb-10 tracking-wide font-light max-w-sm"
         >
           Your source for modern living.
         </motion.p>
-        <motion.button
-          initial={{ opacity: 0, y: 50 }}
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="border border-black px-6 py-2 text-sm uppercase tracking-wide hover:bg-black hover:text-white transition-colors"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
         >
-          <Link to="/About">About US</Link>
-        </motion.button>
+          <Link to="/About" className="inline-block w-full sm:w-[280px]">
+            <button className="w-full py-4 border border-stone-800 text-stone-800 font-semibold tracking-[0.1em] text-sm hover:bg-stone-800 hover:text-[#fdf5cf] transition-all duration-300">
+              ABOUT US
+            </button>
+          </Link>
+        </motion.div>
       </div>
 
       {/* Right Section with Image */}
-      <div className="w-1/2 pl-0 pr-6 pt-6 pb-6">
+      <div className="w-full lg:w-1/2 h-96 sm:h-[500px] lg:h-auto relative overflow-hidden">
         <motion.img
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          src={ourpageImage} // Use the imported image
-          alt="Modern living room with curved white chairs and wooden accents"
-          className="w-full h-full object-cover"
+          initial={{ opacity: 0, scale: 1.05 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          src={assets.OurPage}
+          alt="Modern living room aesthetic"
+          className="w-full h-full object-cover object-center"
         />
+        {/* Subtle overlay for better blending */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#fdf5cf]/20 to-transparent mix-blend-overlay pointer-events-none"></div>
       </div>
     </div>
   );
