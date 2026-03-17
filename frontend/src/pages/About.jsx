@@ -1,5 +1,5 @@
 import React from 'react';
-import Squares from '../components/squares'; // Correct the import path
+import Squares from '../components/Squares'; // Correct the import path
 import { motion } from 'framer-motion';
 import { assets } from '../assets/assets';
 
