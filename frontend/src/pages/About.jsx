@@ -1,5 +1,6 @@
 import React from 'react';
-import Squares from '../components/Squares'; // Correct the import path
+import Squares from '../components/Squares';
+import CountUp from '../components/CountUp';
 import { motion } from 'framer-motion';
 import { assets } from '../assets/assets';
 
@@ -137,10 +138,10 @@ const About = () => {
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-16 mt-32 relative z-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-10">
           {[
-            { value: "10+", label: "Years Experience" },
-            { value: "50k+", label: "Happy Customers" },
-            { value: "100+", label: "Exclusive Designs" },
-            { value: "15", label: "Global Stores" }
+            { value: 10, suffix: "+", label: "Years Experience" },
+            { value: 50, suffix: "k+", label: "Happy Customers" },
+            { value: 100, suffix: "+", label: "Exclusive Designs" },
+            { value: 15, suffix: "", label: "Global Stores" }
           ].map((stat, idx) => (
             <motion.div
               key={idx}
@@ -151,7 +152,7 @@ const About = () => {
               className="flex flex-col items-center justify-center p-8 rounded-3xl bg-white/5 border border-white/5 backdrop-blur-md text-center hover:bg-white/10 transition-colors duration-300"
             >
               <h3 className="text-4xl lg:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-br from-white to-gray-500 mb-2">
-                {stat.value}
+                <CountUp to={stat.value} suffix={stat.suffix} />
               </h3>
               <p className="text-gray-400 text-sm lg:text-base font-medium uppercase tracking-wider">{stat.label}</p>
             </motion.div>
