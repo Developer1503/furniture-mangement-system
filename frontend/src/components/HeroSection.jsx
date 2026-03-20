@@ -6,10 +6,11 @@ const HeroSection = () => {
     <section className="relative min-h-screen w-full bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage: `url(${assets.home_img})`,
-        height: "100vh", // Ensure full viewport height
+        height: "100vh", // Full viewport height
         width: "100%",
         overflow: "hidden",
-        backgroundSize: "cover", // Ensure the image covers the full screen
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       {/* Content Container */}

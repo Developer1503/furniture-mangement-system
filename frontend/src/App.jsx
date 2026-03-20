@@ -25,7 +25,7 @@ const App = () => {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <SearchBar />
-      <main className="flex-grow px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/LivingRoom" element={<LivingRoom />} />

@@ -181,9 +181,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-500 ${isScrolled
+      className={`${location.pathname === '/' ? 'absolute' : 'sticky'} top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
         ? 'bg-white/95 backdrop-blur-md shadow-lg'
-        : 'bg-[#fdf5cf]'
+        : location.pathname === '/' ? 'bg-transparent' : 'bg-[#fdf5cf]'
         }`}
       style={{
         borderBottom: isScrolled ? '1px solid rgba(214, 200, 181, 0.3)' : 'none'
