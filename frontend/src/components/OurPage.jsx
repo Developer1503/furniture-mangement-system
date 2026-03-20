@@ -5,7 +5,14 @@ import { Link } from 'react-router-dom';
 
 const OurPage = () => {
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-[#fdf5cf] overflow-hidden w-full border-t border-[#e8dfb8]">
+    <div 
+      className="flex flex-col lg:flex-row min-h-screen overflow-hidden w-full border-t border-[#e8dfb8]"
+      style={{
+        background: 'hsla(33, 100%, 53%, 1)',
+        backgroundImage: 'linear-gradient(90deg, hsla(33, 100%, 53%, 1) 0%, hsla(58, 100%, 68%, 1) 100%)',
+        filter: 'progid:DXImageTransform.Microsoft.gradient(startColorstr="#FF930F", endColorstr="#FFF95B", GradientType=1)'
+      }}
+    >
       {/* Left Section with Text */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 lg:px-20 xl:px-28 z-10 py-20 lg:py-0">
         <motion.div
@@ -60,7 +67,7 @@ const OurPage = () => {
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
         >
           <Link to="/About" className="inline-block w-full sm:w-[280px]">
-            <button className="w-full py-4 border border-stone-800 text-stone-800 font-semibold tracking-[0.1em] text-sm hover:bg-stone-800 hover:text-[#fdf5cf] transition-all duration-300">
+            <button className="w-full py-4 border border-stone-800 text-stone-800 font-semibold tracking-[0.1em] text-sm hover:bg-stone-800 hover:text-white transition-all duration-300">
               ABOUT US
             </button>
           </Link>
@@ -79,7 +86,7 @@ const OurPage = () => {
           className="w-full h-full object-cover object-center"
         />
         {/* Subtle overlay for better blending */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#fdf5cf]/20 to-transparent mix-blend-overlay pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent mix-blend-overlay pointer-events-none"></div>
       </div>
     </div>
   );
